@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import TvShowCard from "./TvShowCard";
 import axios from "axios";
+import Firebase from './Firebase';
+import ListSelection from './ListSelection';
+
 
 class App extends Component {
   constructor() {
@@ -17,7 +20,12 @@ class App extends Component {
         console.log(this.state.apiData);
       });
     });
-  }
+
+      }
+
+
+
+
   render() {
     return (
       <div className="App">
@@ -31,6 +39,7 @@ class App extends Component {
           genre="Comedy"
           description="Must watch"
         />
+        <ListSelection />
       </div>
     );
   }
