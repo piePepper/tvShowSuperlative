@@ -12,7 +12,8 @@ class MovieGenerator extends Component {
     constructor() {
         super();
         this.state = { 
-            apiData: [], 
+            apiData: [],
+            sortedData: [],
             query: "",
             filteredData:[],
             filteredArray: [],
@@ -22,8 +23,6 @@ class MovieGenerator extends Component {
         this.apiHandler.bind(this);
         this.getFiltereddata = this.getFiltereddata.bind(this);
     }
-
-
 
   // This is a function to hold api for for call at didMOunt and didUpdate
   // url: ` http://api.tvmaze.com/search/shows?q=${this.state.query}`,
@@ -43,10 +42,9 @@ class MovieGenerator extends Component {
         let sortArray = this.state.apiData;
         sortArray.sort( (a, b) => {
         return b.rating.average-a.rating.average
-        
         });
         this.setState({
-        apiData: sortArray,
+            sortedData: sortArray,
         })
     }
 
@@ -73,7 +71,9 @@ class MovieGenerator extends Component {
 
   //Connect changeQueryHandler from Sidebar Componenet
     onChangeQueryHandler = (changeQuery) => {
-        this.setState({ query: changeQuery });
+        this.setState({ 
+            query: changeQuery 
+        });
     };
 
     render() {

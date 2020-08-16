@@ -17,17 +17,6 @@ class App extends Component {
     this.state = { apiData: [], query: "batman" };
   }
 
-  componentDidMount() {
-    axios({
-      url: `http://api.tvmaze.com/search/shows?q=${this.state.query}`,
-    }).then((response) => {
-      this.setState({ apiData: response.data }, () => {
-        console.log(this.state.apiData);
-      });
-    });
-
-      }
-
 
 // CC read this. Add route after the axios call is destructured
 
