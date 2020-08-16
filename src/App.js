@@ -6,18 +6,26 @@ import axios from "axios";
 class App extends Component {
   constructor() {
     super();
-    this.state = { apiData: [], query: "batman" };
+    this.state = { 
+      apiData: [], 
+      query: "batman",
+      filteredArray: [],
+      dropDownValues : [],
+      userList: [],
+    };
   }
 
   componentDidMount() {
     axios({
-      url: `http://api.tvmaze.com/search/shows?q=${this.state.query}`,
+      url: 'https://api.tvmaze.com/shows'
     }).then((response) => {
-      this.setState({ apiData: response.data }, () => {
-        console.log(this.state.apiData);
-      });
+      this.setState({ 
+        apiData: response.data, 
+      }, () => console.log(this.state.apiData));
     });
   }
+
+
   render() {
     return (
       <div className="App">
