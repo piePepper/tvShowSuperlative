@@ -10,13 +10,7 @@ import Firebase from './Firebase';
 import ListSelection from './ListSelection';
 import { BrowserRouter as Router, Route }from "react-router-dom";
 
-
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { apiData: [], query: "batman" };
-  }
-
 
 // CC read this. Add route after the axios call is destructured
 
@@ -39,6 +33,9 @@ class App extends Component {
           <ListSelection />
         </div>
       </Router>
+    )
+  }
+}
 // import Firebase from "./Firebase";
 // import ListSelection from "./ListSelection";
 
