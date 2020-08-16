@@ -21,24 +21,36 @@ class App extends Component {
     }).then((response) => {
       this.setState({ 
         apiData: response.data, 
-      }, () => console.log(this.state.apiData));
-    });
+      }, () => this.sortThis());
+    })
   }
 
+  sortThis = () => {
+    let sortArray = this.state.apiData;
+    sortArray.sort( (a, b) => {
+      return b.rating.average-a.rating.average
+    });
+    this.setState({
+      apiData: sortArray,
+    })
+  }
 
   render() {
     return (
       <div className="App">
         <h1>neatFlix</h1>
-        <TvShowCard
-          title="Girls"
-          img="fikjsklfjksd"
-          alt="img is broken"
-          network="HBO"
-          country="India"
-          genre="Comedy"
-          description="Must watch"
-        />
+        <div className="gridMan">
+        {
+        this.state.apiData.map((each) => {
+          return(
+          <div>
+            <h3>{each.name}</h3>
+            <h3>{each.rating.average}</h3>
+          </div>
+          )
+        })
+        }
+        </div>
       </div>
     );
   }
