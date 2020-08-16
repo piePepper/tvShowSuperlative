@@ -4,6 +4,7 @@ import TvShowCard from "./TvShowCard";
 import axios from "axios";
 import Firebase from './Firebase';
 import ListSelection from './ListSelection';
+import { BrowserRouter as Router, Route }from "react-router-dom";
 
 
 class App extends Component {
@@ -24,25 +25,27 @@ class App extends Component {
       }
 
 
-
+// CC read this. Add route after the axios call is destructured
 
   render() {
     return (
-      <div className="App">
-        <header>
-          <h1>PiePepper</h1>
-        </header>
-        <TvShowCard
-          title="Girls"
-          img="fikjsklfjksd"
-          alt="img is broken"
-          network="HBO"
-          country="India"
-          genre="Comedy"
-          description="Must watch"
-        />
-        <ListSelection />
-      </div>
+      <Router>
+        <div className="App">
+          <header>
+            <h1>PiePepper</h1>
+          </header>
+          <TvShowCard
+            title="Girls"
+            img="fikjsklfjksd"
+            alt="img is broken"
+            network="HBO"
+            country="India"
+            genre="Comedy"
+            description="Must watch"
+          />
+          <ListSelection />
+        </div>
+      </Router>
     );
   }
 }
