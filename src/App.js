@@ -29,7 +29,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>neatFlix</h1>
+        <header>
+          <h1>PiePepper</h1>
+        </header>
         <TvShowCard
           title="Girls"
           img="fikjsklfjksd"
