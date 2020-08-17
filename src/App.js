@@ -4,15 +4,14 @@ import TvShowCard from "./TvShowCard";
 import SideBar from "./SideBar";
 import BodyDisplay from "./CardDisplay";
 import CardGridDisplay from "./CardGridDisplay";
-import MovieGenerator from './MovieGenerator'
+import MovieGenerator from "./MovieGenerator";
 import axios from "axios";
-import Firebase from './Firebase';
-import ListSelection from './ListSelection';
-import { BrowserRouter as Router, Route }from "react-router-dom";
+import Firebase from "./Firebase";
+import ListSelection from "./ListSelection";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
-
-// CC read this. Add route after the axios call is destructured
+  // CC read this. Add route after the axios call is destructured
 
   render() {
     return (
@@ -33,7 +32,7 @@ class App extends Component {
           <ListSelection />
         </div>
       </Router>
-    )
+    );
   }
 }
 // import Firebase from "./Firebase";

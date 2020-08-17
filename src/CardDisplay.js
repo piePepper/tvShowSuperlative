@@ -15,17 +15,17 @@ class CardDisplay extends Component {
       console.log(displayData.show.image);
       return (
         <div>
+          {/* create onClick to display - refer to  */}
           <div className="cardContainer">
-            <span>
-              <img
-                src={displayData.show.image && displayData.show.image.medium}
-              />
-            </span>
-            <span className="bodyCardRating">
+            <img
+              src={displayData.show.image && displayData.show.image.medium}
+            />
+
+            <h4 className="bodyCardRating">
               {displayData.show.rating.average}
-            </span>
+            </h4>
+            <h3 className="bodyCardtitle">{displayData.show.name}</h3>
           </div>
-          <div className="bodyCardtitle">{displayData.show.name}</div>
         </div>
       );
     }
