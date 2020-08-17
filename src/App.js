@@ -6,20 +6,26 @@ import BodyDisplay from "./CardDisplay";
 import CardGridDisplay from "./CardGridDisplay";
 import MovieGenerator from './MovieGenerator'
 import axios from "axios";
-import Firebase from './Firebase';
+import firebase from "./firebase";
 import ListSelection from './ListSelection';
 import { BrowserRouter as Router, Route }from "react-router-dom";
 
 class App extends Component {
 
 // CC read this. Add route after the axios call is destructured
+  getListNameThenAddToDatabase = () => {
+    const listName = prompt("Enter List Name")
+    const dbRef = firebase.database().ref()
+    dbRef.push(listName) 
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
           <header>
-            <h1>PiePepper</h1>
+            <h1>Test PiePepper</h1>
+            <button onClick={this.getListNameThenAddToDatabase}>Create List</button>
           </header>
           <TvShowCard
             title="Girls"
