@@ -10,28 +10,26 @@ class ListSelection extends Component {
     }
 
     componentDidMount() {
-    //Variable refers to the firebase database
-    const dbRef = firebase.database().ref()
+        //Variable refers to the firebase database
+        const dbRef = firebase.database().ref()
 
-    //Event listener when changes are made to database
-    dbRef.on('value', (snapshot) => {
+        //Event listener when changes are made to database
+        dbRef.on('value', (snapshot) => {
 
-        //Where our data from firebase will be stored 
-        const data = snapshot.val()
+            //Where our data from firebase will be stored 
+            const data = snapshot.val()
+            //new array to hold the firebase data
+            const newSelection = []
+            //for in loop to, loop through the firebase object push the information stored in the newSelection to the page.
+            for (let key in data) {
+                newSelection.push({key: key, name: data[key]})
+            }
 
-        //new array to hold the firebase data
-        const newSelection = []
+            this.setState({
+                userSelection: newSelection
+            })        
 
-        //for in loop to, loop through the firebase object push the information stored in the newSelection to the page.
-        for (let key in data) {
-        newSelection.push({key: key, name: data[key]})
-        }
-
-        this.setState({
-            userSelection: newSelection
-        })        
-
-    })
+        })
     }
 
     render() {
@@ -43,9 +41,7 @@ class ListSelection extends Component {
                         return (
                         <li key={selection.key}>
                                 <p>{selection.name}</p>
-
                         </li>
-
                         )
                     })
                     }

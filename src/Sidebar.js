@@ -6,6 +6,9 @@ class SideBar extends Component {
   constructor() {
     super();
     this.state = {
+      // genreArray: ['Action','Adventure','Anime','Children','Comedy','Crime','DIY','Drama','Espionage','Family','Fantasy','Food','History','Horror','Legal', 'Medical','Musical','History','Nature','Romance','Science-Fiction','Sports','Supernatural','Thriller','Travel','War','Western'],
+      // showStatus: ['Running','Ended','To Be Determined','In Development'],
+      // language: ['Chinese','Dutch','English','French','Italian','Latin','Urdu'],
       searchQuery: "",
       genre: "",
     };
@@ -19,6 +22,8 @@ class SideBar extends Component {
       searchQuery: event.target.value,
     });
   };
+
+
 
   // getfiltered data is on App.js
   genreHandler = (event) => {
@@ -45,13 +50,16 @@ class SideBar extends Component {
           />
           <label>
             Genre
+            {/* use map to get this */}
             <select value={this.state.genre} onChange={this.genreHandler}>
-              <option value="">Any</option>
+              <option value="Any">Any</option>
+              <option value="Action">Action</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Anime">Anime</option>
               <option value="Comedy">Comedy</option>
               <option value="Drama">Drama</option>
               <option value="Family">Family</option>
               <option value="Romance">Romance</option>
-              <option value="Action">Action</option>
             </select>
           </label>
         </form>
