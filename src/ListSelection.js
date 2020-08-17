@@ -1,54 +1,29 @@
 import React, { Component } from 'react';
-import firebase from './Firebase'
+import firebase from './firebase'
 
 class ListSelection extends Component {
     constructor() {
         super();
-        this.state = {
-            userSelection: []
-        }
     }
 
-    componentDidMount() {
-    //Variable refers to the firebase database
-    const dbRef = firebase.database().ref()
 
-    //Event listener when changes are made to database
-    dbRef.on('value', (snapshot) => {
 
-        //Where our data from firebase will be stored 
-        const data = snapshot.val()
-
-        //new array to hold the firebase data
-        const newSelection = []
-
-        //for in loop to, loop through the firebase object push the information stored in the newSelection to the page.
-        for (let key in data) {
-        newSelection.push({key: key, name: data[key]})
-        }
-
-        this.setState({
-            userSelection: newSelection
-        })        
-
-    })
+    componentDidMount = () => {
+        const dbRef = firebase.database().ref()
+        dbRef.on('value', (snapshot) => {
+            console.log(this.props.listName)
+            // Need to use this to display code to the screen on the side 
+        })
     }
+
 
     render() {
         return (
             <div className="firebase-data">
+                {console.log(this.props)}
+                <h1>User Lists</h1>
                 <ul>
-                    {
-                    this.state.userSelection.map( (selection) => {
-                        return (
-                        <li key={selection.key}>
-                                <p>{selection.name}</p>
 
-                        </li>
-
-                        )
-                    })
-                    }
                 </ul>
             </div>
         )
