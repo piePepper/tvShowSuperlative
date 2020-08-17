@@ -8,47 +8,48 @@ import axios from "axios";
 // import ListSelection from "./ListSelection";
 
 class ShowGenerator extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             query: "batman",
             userList: [],
             chosenFilters: [['language'], ['genres'], ['status'], ['network', 'name']],
             apiData: [],
-            filteredData: [],
+            returnedArray: [
+                ['English','language'],
+                ['Action', 'genres'],
+                ['The CW','network','name'],
+            ],
+            displayArray: [],
         };
     }
 
     apiHandler() {
-        console.log(this.state.query)
         this.state.query === ''
         ?
             axios({
                 url: 'https://api.tvmaze.com/shows'
             })
             .then((response) => {
+                console.log('im in the correct', response)
                 this.setState({
                     apiData: response.data,
-                    filteredData: response.data
-                }, ()=>{
-                    console.log('im calling no query filterarray', response.data);
-                    this.createFilterArrays(this.state.apiData); 
-                    console.log('im set this one')});
+                }, () => this.filterData()); 
             })
         :
             axios({
                 url: ` http://api.tvmaze.com/search/shows?q=${this.state.query}`
             })
             .then((response) => {
+                console.log('im in the correct', response)
                 this.setState({
-                    apiData: response.data,
-                    filteredData: response.data
-                }, ()=>{
-                    console.log('im calling query filterarray', response.data);
-                    this.createFilterArrays(this.state.apiData); 
-                    console.log('Im set that one')});
+                    apiData: response.data.map( (each) => {
+                        return each.show;
+                    }),
+                }, () => this.filterData());
             })
     }
+
 
     // Component DidMount occurs only once - cannot update query state
     componentDidMount() {
@@ -62,112 +63,46 @@ class ShowGenerator extends Component {
     //     }
     // }
 
-
-    //! hissssss don't look at me, I'm hideous!
-    // its not my fault though, it's the apis fault
-    // and the fact that the two endpoints return different objects.
-    // this should likely be broken into it's own function component
-    // it returns some state, because this is ugly as fuck
-    createFilterArrays = (response) => {
-        let keyArray = [];
-        let counter = 0;
-        this.state.chosenFilters.forEach((each) => {
-            console.log(this.state)
-            let [key, subKey] = each;
-            let tempArray = [];
-            keyArray.push([`${key}Array`])
-            this.setState({
-                [`${key}Array`]: [],
-            },() =>{console.log('i shouldbe setting state', this.state)});
-            console.log(key,subKey);
-            if(subKey === undefined){              
-                if (this.state.query === '') {
-                    response.forEach((single) => {
-                        if (single[`${key}`] === null || single[`${key}`] === undefined) {
-                        }
-                        else if (single[`${key}`].constructor === Array) {
-                            single[`${key}`].forEach((nestedValue) => {
-                                if (!tempArray.includes(nestedValue))
-                                    tempArray.push(nestedValue)
-                            })
-                        }
-                        else if (!tempArray.includes(single[`${key}`])) {
-                            tempArray.push(single[`${key}`])
-                        }
-                    })
+    filterDataNoQuery = (data) => {
+        let recursiveArray = []
+        this.state.returnedArray.forEach((filterItem) => {
+            let [word, filter, extra] = filterItem;
+            console.log(word, filter, extra)
+            let tempArray =  data.filter((each) => {
+                if( extra !== undefined &&
+                    each[`${filter}`] !== null &&
+                    each[`${filter}`] !== undefined) {
+                    if (each[`${filter}`][`${extra}`] !== null &&
+                        each[`${filter}`][`${extra}`] !== undefined &&
+                        each[`${filter}`][`${extra}`].includes(word)) {
+                    return each
+                    }
+                    else {}
                 }
-                else {
-                    response.forEach((single) => {
-                        console.log('single no sub',single);
-                        if (single.show[`${key}`] === null || single.show[`${key}`] === undefined) {
-                        }
-                        else if (single.show[`${key}`].constructor === Array) {
-                            single.show[`${key}`].forEach((nestedValue) => {
-                                console.log(nestedValue);
-                                if (!tempArray.includes(nestedValue))
-                                    tempArray.push(nestedValue)
-                            })
-                        }
-                        else if (!tempArray.includes(single[`${key}`])) {
-                            tempArray.push(single[`${key}`])
-                        }
-                    })
+                else if (each[`${filter}`] !== null &&
+                        each[`${filter}`] !== undefined &&
+                        each[`${filter}`].includes(word)) {
+                    return each
                 }
-            }
-            else {
-                if (this.state.query === '') {
-                    response.forEach((single) => {
-                        if (single[`${key}`] === null || single[`${key}`] === undefined)  {
-                        }
-                        else if (!tempArray.includes(single[`${key}`][`${subKey}`])) {
-                            tempArray.push(single[`${key}`][`${subKey}`])
-                        }
-                    })
-                }
-                else {
-                    response.forEach((single) => {
-                        console.log('single sub',single);
-                        if (single.show[`${key}`] === null || single.show[`${key}`] === undefined)  {
-                        }
-                        else if (!tempArray.includes(single.show[`${key}`][`${subKey}`])) {
-                            console.log(single.show[`${key}`][`${subKey}`]);
-                            tempArray.push(single.show[`${key}`][`${subKey}`])
-                        }
-                    })
-                }
-            }
-
-            this.setState({
-                [`${key}Array`]: tempArray.sort()
+                else {}
             })
-            counter++;
-            console.log(counter);
+            console.log(tempArray);
+            recursiveArray = tempArray;
         })
-        console.log('here', this.state)
+        console.log(recursiveArray)
     }
-
-
-
-    //! this might be redudant.
-    // sortThis = () => {
-    //     let sortArray = this.state.apiData;
-    //     sortArray.sort((a, b) => {
-    //         return b.rating.average - a.rating.average
-    //     });
-    //     this.setState({
-    //         sortedData: sortArray,
-    //     })
-    // }
-    //!
 
     // Create a function to filter data - Inside the function take 1 parameter. That parameter have to filter api data from that parameter tie in with searchQueryHandler return.
     // Created two keys apiData and Filtered Data. apiData is base that comes from Api and filteredData is filtered based on dropDown adn will display UI.
-    getFiltereddata(item) {
-        const filteredApiData = this.state.apiData.filter((row) => {
-            return row.show.genres.includes(item);
-        });
-        this.setState({ filteredData: filteredApiData });
+    //! re-enable this
+    filterData() {
+        this.state.query === ''
+        ?
+            this.filterDataNoQuery(this.state.apiData)
+        :
+            this.filterDataQuery(this.state.apiData);
     }
+    //! re-enable this
 
     //Connect changeQueryHandler from Sidebar Componenet
     onChangeQueryHandler = (changeQuery) => {
@@ -179,7 +114,7 @@ class ShowGenerator extends Component {
     render() {
         return (
             <div className="App">
-                <Sidebar querySetter={this.dropDownValueSetter} />
+                {/* <Sidebar query={this.state.query} chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} /> */}
                 {
                     this.state.apiData.map((each) => {
                         return (

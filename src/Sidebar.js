@@ -6,22 +6,119 @@ class SideBar extends Component {
   constructor() {
     super();
     this.state = {
-      // genreArray: ['Action','Adventure','Anime','Children','Comedy','Crime','DIY','Drama','Espionage','Family','Fantasy','Food','History','Horror','Legal', 'Medical','Musical','History','Nature','Romance','Science-Fiction','Sports','Supernatural','Thriller','Travel','War','Western'],
-      // showStatus: ['Running','Ended','To Be Determined','In Development'],
-      // language: ['Chinese','Dutch','English','French','Italian','Latin','Urdu'],
-      searchQuery: "",
-      genre: "",
+      query: '',
+      filters: [
+        ['language',[]],
+        ['genres',[]],
+        ['status',[]],
+        ['network',[]],
+      ],
     };
   }
 
   // first change for value of input box
   // 2nd change for changing the query request of Api
+  // searchQueryHandler = (event) => {
+  //   this.setState({
+  //     searchQuery: event.target.value,
+  //   });
+  // };
 
-  searchQueryHandler = (event) => {
-    this.setState({
-      searchQuery: event.target.value,
-    });
-  };
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps.apiData !== this.props.apiData) {
+      this.createFilterArrays(this.props.apiData);
+    }
+  }
+
+    //! hissssss don't look at me, I'm hideous!
+    // its not my fault though, it's the apis fault
+    // and the fact that the two endpoints return different objects.
+    // this should likely be broken into it's own function component
+    // it returns some state, because this is ugly as fuck
+    createFilterArrays = (response) => {
+      console.log(this.state.filters[0][1]);
+      // let keyArray = [];
+      this.props.chosenFilters.forEach((each,index) => {
+        console.log(typeof(index),index)
+          let [key, subKey] = each;
+          let tempArray = [];
+          // keyArray.push([`${key}Array`])
+          // this.setState({
+          //     [`${key}Array`]: [],
+          // });
+          // console.log(key,subKey);
+          if(subKey === undefined){              
+              if (this.props.query === '') {
+                  response.forEach((single) => {
+                      if (single[`${key}`] === null || single[`${key}`] === undefined) {
+                      }
+                      else if (single[`${key}`].constructor === Array) {
+                          single[`${key}`].forEach((nestedValue) => {
+                              if (!tempArray.includes(nestedValue))
+                                  tempArray.push(nestedValue)
+                          })
+                      }
+                      else if (!tempArray.includes(single[`${key}`])) {
+                          tempArray.push(single[`${key}`])
+                      }
+                  })
+              }
+              else {
+                  response.forEach((single) => {
+                    if (single.show[`${key}`] === null || single.show[`${key}`] === undefined) {
+                      }
+                      else if (single.show[`${key}`].constructor === Array) {
+                          single.show[`${key}`].forEach((nestedValue) => {
+                              if (!tempArray.includes(nestedValue))
+                                  tempArray.push(nestedValue)
+                          })
+                      }
+                      else if (!tempArray.includes(single.show[`${key}`])) {
+                          tempArray.push(single.show[`${key}`])
+                      }
+                  })
+              }
+          }
+          else {
+              if (this.props.query === '') {
+                  response.forEach((single) => {
+                      if (single[`${key}`] === null || single[`${key}`] === undefined)  {
+                      }
+                      else if (!tempArray.includes(single[`${key}`][`${subKey}`])) {
+                          tempArray.push(single[`${key}`][`${subKey}`])
+                      }
+                  })
+              }
+              else {
+                  response.forEach((single) => {
+                      if (single.show[`${key}`] === null || single.show[`${key}`] === undefined)  {
+                      }
+                      else if (!tempArray.includes(single.show[`${key}`][`${subKey}`])) {
+                          tempArray.push(single.show[`${key}`][`${subKey}`])
+                      }
+                  })
+              }
+          }
+          // console.log(tempArray.sort());
+          this.setState({
+            // filters[index][1]: tempArray.sort()
+          })
+      })
+      // console.log(this)
+      // console.log(this.state)
+  }
+
+  //! this might be redudant.
+  // sortThis = () => {
+  //     let sortArray = this.state.apiData;
+  //     sortArray.sort((a, b) => {
+  //         return b.rating.average - a.rating.average
+  //     });
+  //     this.setState({
+  //         sortedData: sortArray,
+  //     })
+  // }
+  //!
 
 
 
@@ -48,8 +145,17 @@ class SideBar extends Component {
             value={this.state.searchQuery}
             onChange={this.searchQueryHandler}
           />
+                  {/* Creating clickhanlder through sideBarData that will send data to the parent --> App.js */}
+        <button className="sideBarSearchBtn" onClick={this.sideBarData}>
+          Search
+        </button>
+        </form>
+        <form>
+          {
+
+
           <label>
-            Genre
+            Language
             {/* use map to get this */}
             <select value={this.state.genre} onChange={this.genreHandler}>
               <option value="Any">Any</option>
@@ -62,11 +168,8 @@ class SideBar extends Component {
               <option value="Romance">Romance</option>
             </select>
           </label>
+          }
         </form>
-        {/* Creating clickhanlder through sideBarData that will send data to the parent --> App.js */}
-        <button className="sideBarSearchBtn" onClick={this.sideBarData}>
-          Search
-        </button>
       </div>
     );
   }
