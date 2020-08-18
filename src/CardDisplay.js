@@ -1,6 +1,7 @@
 // Display for each individual card
 
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class CardDisplay extends Component {
   constructor(props) {
@@ -12,20 +13,16 @@ class CardDisplay extends Component {
     if (!displayData) {
       return <div>Loading</div>;
     } else {
-      console.log(displayData.show.image);
+      console.log(displayData.image);
       return (
         <div>
-          <div className="cardContainer">
-            <span>
-              <img
-                src={displayData.show.image && displayData.show.image.medium}
-              />
-            </span>
-            <span className="bodyCardRating">
-              {displayData.show.rating.average}
-            </span>
-          </div>
-          <div className="bodyCardtitle">{displayData.show.name}</div>
+          <Link to={`/show/${displayData.id}`}>
+            <div className="cardContainer">
+              <img src={displayData.image} />
+              <h4 className="bodyCardRating">{displayData.average}</h4>
+              <h3 className="bodyCardtitle">{displayData.name}</h3>
+            </div>
+          </Link>
         </div>
       );
     }
