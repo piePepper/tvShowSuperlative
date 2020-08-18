@@ -11,13 +11,14 @@ class ShowGenerator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: "batman",
+            query: "",
             userList: [],
             chosenFilters: [['language'], ['genres'], ['status'], ['network', 'name']],
             apiData: [],
             returnedArray: [
                 ['English','language'],
-                ['Action', 'genres'],
+                ['Comedy', 'genres'],
+                ['Running', 'status'],
                 ['The CW','network','name'],
             ],
             displayArray: [],
@@ -31,7 +32,6 @@ class ShowGenerator extends Component {
                 url: 'https://api.tvmaze.com/shows'
             })
             .then((response) => {
-                console.log('im in the correct', response)
                 this.setState({
                     apiData: response.data,
                 }, () => this.filterData()); 
@@ -41,7 +41,6 @@ class ShowGenerator extends Component {
                 url: ` http://api.tvmaze.com/search/shows?q=${this.state.query}`
             })
             .then((response) => {
-                console.log('im in the correct', response)
                 this.setState({
                     apiData: response.data.map( (each) => {
                         return each.show;
@@ -57,52 +56,45 @@ class ShowGenerator extends Component {
     }
 
     // Updates when setState occurs - takes 2 props previousProps and PreviousStates is a built in funciton
-    // componentDidUpdate(previousProps, previousState) {
-    //     if (previousState.query !== this.state.query) {
-    //         this.apiHandler();
-    //     }
-    // }
-
-    filterDataNoQuery = (data) => {
-        let recursiveArray = []
-        this.state.returnedArray.forEach((filterItem) => {
-            let [word, filter, extra] = filterItem;
-            console.log(word, filter, extra)
-            let tempArray =  data.filter((each) => {
-                if( extra !== undefined &&
-                    each[`${filter}`] !== null &&
-                    each[`${filter}`] !== undefined) {
-                    if (each[`${filter}`][`${extra}`] !== null &&
-                        each[`${filter}`][`${extra}`] !== undefined &&
-                        each[`${filter}`][`${extra}`].includes(word)) {
-                    return each
-                    }
-                    else {}
-                }
-                else if (each[`${filter}`] !== null &&
-                        each[`${filter}`] !== undefined &&
-                        each[`${filter}`].includes(word)) {
-                    return each
-                }
-                else {}
-            })
-            console.log(tempArray);
-            recursiveArray = tempArray;
-        })
-        console.log(recursiveArray)
+    componentDidUpdate(previousProps, previousState) {
+        if (previousState.query !== this.state.query) {
+            this.apiHandler();
+        }
     }
 
     // Create a function to filter data - Inside the function take 1 parameter. That parameter have to filter api data from that parameter tie in with searchQueryHandler return.
     // Created two keys apiData and Filtered Data. apiData is base that comes from Api and filteredData is filtered based on dropDown adn will display UI.
-    //! re-enable this
+
     filterData() {
-        this.state.query === ''
-        ?
-            this.filterDataNoQuery(this.state.apiData)
-        :
-            this.filterDataQuery(this.state.apiData);
+        let data = this.state.apiData
+        this.state.returnedArray.forEach((filterItem) => {
+            let [word, filter, extra] = filterItem;
+            const recursiveFilter = (recursedArray) => {
+                data =  recursedArray.filter((each) => {
+                    if( extra !== undefined) {
+                        if (each[`${filter}`] === null ||
+                            each[`${filter}`] === undefined ||
+                            each[`${filter}`][`${extra}`] === null || 
+                            each[`${filter}`][`${extra}`] === undefined)
+                        {}
+                        else if(each[`${filter}`][`${extra}`].includes(word)) {
+                                return each
+                        }
+                    }
+                    else if(each[`${filter}`] !== null &&
+                            each[`${filter}`] !== undefined &&
+                            each[`${filter}`].includes(word)) {
+                                return each
+                    }
+                })
+            }
+            recursiveFilter(data);
+        })
+        this.setState({
+            displayArray: data,
+        })
     }
-    //! re-enable this
+
 
     //Connect changeQueryHandler from Sidebar Componenet
     onChangeQueryHandler = (changeQuery) => {
@@ -114,7 +106,7 @@ class ShowGenerator extends Component {
     render() {
         return (
             <div className="App">
-                {/* <Sidebar query={this.state.query} chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} /> */}
+                <Sidebar query={this.state.query} chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} />
                 {
                     this.state.apiData.map((each) => {
                         return (
