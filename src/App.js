@@ -3,8 +3,7 @@ import "./App.css";
 import TvShowCard from "./TvShowCard";
 import SideBar from "./SideBar";
 import BodyDisplay from "./CardDisplay";
-import CardGridDisplay from "./CardGridDisplay";
-import MovieGenerator from "./MovieGenerator";
+import ShowGenerator from "./ShowGenerator";
 import axios from "axios";
 import Firebase from "./Firebase";
 import ListSelection from "./ListSelection";
@@ -20,16 +19,10 @@ class App extends Component {
           <header>
             <h1>PiePepper</h1>
           </header>
-          <TvShowCard
-            title="Girls"
-            img="fikjsklfjksd"
-            alt="img is broken"
-            network="HBO"
-            country="India"
-            genre="Comedy"
-            description="Must watch"
-          />
           <ListSelection />
+          <Route exact path="/" component={ShowGenerator} />
+          <Route path="/show/:id" component={TvShowCard} />
+          {/* <ShowGenerator /> */}
         </div>
       </Router>
     );
