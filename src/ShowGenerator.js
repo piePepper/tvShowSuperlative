@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Sidebar from "./Sidebar";
-import BodyDisplay from "./CardDisplay";
-import CardGridDisplay from "./CardGridDisplay";
 import axios from "axios";
-// import Firebase from "./Firebase";
-// import ListSelection from "./ListSelection";
 
 class ShowGenerator extends Component {
     constructor(props) {
@@ -62,9 +58,6 @@ class ShowGenerator extends Component {
         }
     }
 
-    // Create a function to filter data - Inside the function take 1 parameter. That parameter have to filter api data from that parameter tie in with searchQueryHandler return.
-    // Created two keys apiData and Filtered Data. apiData is base that comes from Api and filteredData is filtered based on dropDown adn will display UI.
-
     filterData() {
         let data = this.state.apiData
         this.state.returnedArray.forEach((filterItem) => {
@@ -95,39 +88,20 @@ class ShowGenerator extends Component {
         })
     }
 
-
-    //Connect changeQueryHandler from Sidebar Componenet
-    onChangeQueryHandler = (changeQuery) => {
-        this.setState({
-            query: changeQuery
-        });
-    };
-
     render() {
         return (
             <div className="App">
-                <Sidebar query={this.state.query} chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} />
+                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} />
                 {
                     this.state.apiData.map((each) => {
                         return (
                             <>
                                 <h3>{each.name}</h3>
-                                {/* <h3>{each.rating.average}</h3> */}
+                                <h3>{each.rating.average}</h3>
                             </>
                         )
                     })
                 }
-                {/* {
-                displayData.map((card) => {
-                    return(
-                        <div className="cardContainer">
-                            <img src={card.show.image && card.show.image.medium} />
-                            <h2> {card.show.rating.average}</h2>
-                            <h3>{card.show.name}</h3>
-                        </div>
-                    )
-                })
-                } */}
             </div>
         );
     }

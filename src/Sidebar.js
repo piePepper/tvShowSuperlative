@@ -4,13 +4,7 @@ class SideBar extends Component {
   constructor() {
     super();
     this.state = {
-      query: '',
-      filters: [
-        ['language',[]],
-        ['genres',[]],
-        ['status',[]],
-        ['network',[]],
-      ],
+      filters: [],
     };
   }
 
@@ -20,47 +14,52 @@ class SideBar extends Component {
     }
   }
 
-    createFilterArrays = (response) => {
-      console.log(this.state.filters[0]);
-      // let keyArray = [];
-      this.props.chosenFilters.forEach((each,index) => {
-        // console.log(typeof(index),index)
-          let [key, subKey] = each;
-          let tempArray = [];
-          // keyArray.push([`${key}Array`])
-          // this.setState({
-          //     [`${key}Array`]: [],
-          // });
-          // console.log(key,subKey);
-          if(subKey === undefined){
-            response.forEach((single) => {
-                if (single[`${key}`] === null || single[`${key}`] === undefined) 
-                {}
-                else if (single[`${key}`].constructor === Array) {
-                    single[`${key}`].forEach((nestedValue) => {
-                        if (!tempArray.includes(nestedValue))
-                            tempArray.push(nestedValue)
-                    })
-                }
-                else if (!tempArray.includes(single[`${key}`])) {
-                    tempArray.push(single[`${key}`])
-                }
-            })
-          }
-          else {
-            response.forEach((single) => {
-                if (single[`${key}`] === null || single[`${key}`] === undefined)  
-                {}
-                else if (!tempArray.includes(single[`${key}`][`${subKey}`])) {
-                    tempArray.push(single[`${key}`][`${subKey}`])
-                }
-            })
-          }
-          console.log(tempArray.sort());
-          this.setState({
-            // filters[0][`${index}`][1]: tempArray.sort()
-          })
+  createFilterArrays = (response) => {
+    let tempFilters = [];
+    this.props.chosenFilters.forEach((each,index) => {
+      let tempArray = [];
+      let [key, subKey] = each;
+      console.log(key, subKey);
+      if(subKey === undefined){
+        response.forEach((single) => {
+            if (single[`${key}`] === null || single[`${key}`] === undefined) 
+            {}
+            else if (single[`${key}`].constructor === Array) {
+                single[`${key}`].forEach((nestedValue) => {
+                    if (!tempArray.includes(nestedValue))
+                        tempArray.push(nestedValue)
+                })
+            }
+            else if (!tempArray.includes(single[`${key}`])) {
+                tempArray.push(single[`${key}`])
+            }
+        })
+      }
+      else {
+        response.forEach((single) => {
+            if (single[`${key}`] === null || single[`${key}`] === undefined || single[`${key}`][`${subKey}`] === null || single[`${key}`][`${subKey}`] === undefined)  
+            {}
+            else if (single[`${key}`][`${subKey}`].constructor === Array) {
+              single[`${key}`][`${subKey}`].forEach((nestedValue) => {
+                if (!tempArray.includes(nestedValue))
+                    tempArray.push(nestedValue)
+              })
+            }
+            else if (!tempArray.includes(single[`${key}`][`${subKey}`])) {
+                tempArray.push(single[`${key}`][`${subKey}`])
+            }
+        })
+      }
+      // console.log(tempArray.sort());
+      this.setState({
       })
+    tempFilters.push([tempArray,[key],[subKey]])
+    })
+    console.log(tempFilters);
+    this.setState({
+      filters: tempFilters,
+    }, () => console.log(this.state.filters))
+    
   }
 
   // getfiltered data is on App.js

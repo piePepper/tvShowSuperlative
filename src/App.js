@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
 import ShowGenerator from './ShowGenerator'
-import axios from "axios";
 import Firebase from './Firebase';
 import ListSelection from './ListSelection';
 import { BrowserRouter as Router, Route }from "react-router-dom";
