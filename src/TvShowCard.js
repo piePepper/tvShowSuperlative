@@ -36,7 +36,7 @@ class TvShowCard extends Component {
           <li>{data.network && data.network.name}</li>
           <li>{data.country}</li>
           <li>{data.genres}</li>
-          <li>{data.summary}</li>
+          <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
         </ul>
       </div>
     );

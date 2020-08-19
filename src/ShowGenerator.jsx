@@ -8,7 +8,7 @@ import axios from "axios";
 // import Firebase from "./Firebase";
 // import ListSelection from "./ListSelection";
 
-class MovieGenerator extends Component {
+class ShowGenerator extends Component {
   constructor() {
     super();
     this.state = {
@@ -89,6 +89,7 @@ class MovieGenerator extends Component {
         id: row.id,
       };
     });
+
     return (
       <div className="App">
         <h1>neatFlix</h1>
@@ -107,7 +108,7 @@ class MovieGenerator extends Component {
   }
 }
 
-export default MovieGenerator;
+export default ShowGenerator;
 
 //! Matt saving this for testing.
 {
