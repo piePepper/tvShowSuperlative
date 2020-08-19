@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import firebase from './firebase'
-
+import firebase from './firebase';
+// import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import UserList from "./UserList";
 class ListSelection extends Component {
     constructor() {
         super();
@@ -34,6 +36,9 @@ class ListSelection extends Component {
         dbRef.child(listID).remove()
     }
 
+
+
+
     render() {
         return (
             <div className="firebase-data">
@@ -42,8 +47,10 @@ class ListSelection extends Component {
                     {this.state.dbReturn.map((listName) => {
                         return (
                             <li key={listName.key}>
+                                <Link to={`/list/${listName.key}`}>
                                 <p>{listName.name}</p>
                                 <button onClick={() => { this.removeList(listName.key) }}>X</button>
+                                </Link>
                             </li>
                         )
                     })
@@ -54,5 +61,8 @@ class ListSelection extends Component {
     }
 }
 
+// <Link to={`/movie/${movieObject.id}`}>
+//     <img src={`http://image.tmdb.org/t/p/w500/${movieObject.poster_path}`} alt={`Official Poster for ${movieObject.original_Title}`} />
+// </Link>
 export default ListSelection;
 
