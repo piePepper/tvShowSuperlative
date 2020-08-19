@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './Firebase';
+import firebase from './firebase';
 import { Link } from "react-router-dom";
 
 class ListSelection extends Component {

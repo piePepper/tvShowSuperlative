@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import ShowGenerator from "./ShowGenerator";
 import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
-import firebase from "./Firebase";
+import firebase from "./firebase";
 import "./App.css";
 import UserList from "./UserList"
 
