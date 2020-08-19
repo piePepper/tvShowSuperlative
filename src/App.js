@@ -5,6 +5,7 @@ import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
 import firebase from "./firebase";
 import "./App.css";
+import UserList from "./UserList"
 
 class App extends Component {
 
@@ -27,6 +28,7 @@ class App extends Component {
           <ListSelection />
           <Route exact path="/" component={ShowGenerator} />
           <Route path="/show/:id" component={TvShowCard} />
+          <Route path="/list/:listid" component={UserList} />
         </div>
       </Router>
     );
