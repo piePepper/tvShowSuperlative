@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "365d81cc8d9d79813e9286bdc309ad88",
+    "revision": "7d2d405878a0f7678c073664c6c2666b",
     "url": "/tvShowSuperlative/index.html"
   },
   {
-    "revision": "fcc4c4d3acd5d5c23ebf",
+    "revision": "6ec2181be08ca62ebec3",
     "url": "/tvShowSuperlative/static/css/main.1aa98fce.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tvShowSuperlative/static/js/2.c2786552.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fcc4c4d3acd5d5c23ebf",
-    "url": "/tvShowSuperlative/static/js/main.720f3a14.chunk.js"
+    "revision": "6ec2181be08ca62ebec3",
+    "url": "/tvShowSuperlative/static/js/main.8d253d50.chunk.js"
   },
   {
     "revision": "9f1b295bbe49f1abd175",

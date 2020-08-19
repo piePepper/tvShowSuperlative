@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/tvShowSuperlative/static/css/main.1aa98fce.chunk.css",
-    "main.js": "/tvShowSuperlative/static/js/main.720f3a14.chunk.js",
-    "main.js.map": "/tvShowSuperlative/static/js/main.720f3a14.chunk.js.map",
+    "main.js": "/tvShowSuperlative/static/js/main.8d253d50.chunk.js",
+    "main.js.map": "/tvShowSuperlative/static/js/main.8d253d50.chunk.js.map",
     "runtime-main.js": "/tvShowSuperlative/static/js/runtime-main.2b9d7869.js",
     "runtime-main.js.map": "/tvShowSuperlative/static/js/runtime-main.2b9d7869.js.map",
     "static/js/2.c2786552.chunk.js": "/tvShowSuperlative/static/js/2.c2786552.chunk.js",
     "static/js/2.c2786552.chunk.js.map": "/tvShowSuperlative/static/js/2.c2786552.chunk.js.map",
     "index.html": "/tvShowSuperlative/index.html",
-    "precache-manifest.c3a416494f77c03ae001d48524386bd8.js": "/tvShowSuperlative/precache-manifest.c3a416494f77c03ae001d48524386bd8.js",
+    "precache-manifest.f8d86517ab42a72ff8382582f8f43888.js": "/tvShowSuperlative/precache-manifest.f8d86517ab42a72ff8382582f8f43888.js",
     "service-worker.js": "/tvShowSuperlative/service-worker.js",
     "static/css/main.1aa98fce.chunk.css.map": "/tvShowSuperlative/static/css/main.1aa98fce.chunk.css.map",
     "static/js/2.c2786552.chunk.js.LICENSE.txt": "/tvShowSuperlative/static/js/2.c2786552.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.2b9d7869.js",
     "static/js/2.c2786552.chunk.js",
     "static/css/main.1aa98fce.chunk.css",
-    "static/js/main.720f3a14.chunk.js"
+    "static/js/main.8d253d50.chunk.js"
   ]
 }
