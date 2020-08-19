@@ -5,29 +5,29 @@ import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
 import firebase from "./firebase";
 import "./App.css";
-import UserList from "./UserList"
+import UserList from "./UserList";
 
 class App extends Component {
-
-// CC read this. Add route after the axios call is destructured
+  // CC read this. Add route after the axios call is destructured
   getListNameThenAddToDatabase = () => {
-    const listName = prompt("Enter List Name")
-    const dbRef = firebase.database().ref()
+    const listName = prompt("Enter List Name");
+    const dbRef = firebase.database().ref();
     const userObj = {
       listName: listName,
-      shows: []
-    }
-    dbRef.push(userObj)
-  }
-
+      shows: [],
+    };
+    dbRef.push(userObj);
+  };
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <header>
             <h1>Test PiePepper</h1>
-            <button onClick={this.getListNameThenAddToDatabase}>Create List</button>
+            <button onClick={this.getListNameThenAddToDatabase}>
+              Create List
+            </button>
           </header>
           <ListSelection />
           <Route exact path="/" component={ShowGenerator} />
