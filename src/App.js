@@ -4,6 +4,7 @@ import ShowGenerator from "./ShowGenerator";
 import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
 import firebase from "./firebase";
+import "./App.css";
 
 class App extends Component {
 
