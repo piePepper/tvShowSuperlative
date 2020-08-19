@@ -1,13 +1,12 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ShowGenerator from "./ShowGenerator";
+import ListSelection from "./ListSelection";
+import TvShowCard from "./TvShowCard";
 import "./App.css";
-import ShowGenerator from './ShowGenerator'
-import Firebase from './Firebase';
-import ListSelection from './ListSelection';
-import { BrowserRouter as Router, Route }from "react-router-dom";
 
 class App extends Component {
-
-// CC read this. Add route after the axios call is destructured
+  // CC read this. Add route after the axios call is destructured
 
   render() {
     return (
@@ -16,14 +15,13 @@ class App extends Component {
           <header>
             <h1>PiePepper</h1>
           </header>
-          <Route exact path="/" component={ ShowGenerator } />
           <ListSelection />
+          <Route exact path="/" component={ShowGenerator} />
+          <Route path="/show/:id" component={TvShowCard} />
         </div>
       </Router>
-    )
+    );
   }
 }
-// import Firebase from "./Firebase";
-// import ListSelection from "./ListSelection";
 
 export default App;
