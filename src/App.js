@@ -13,7 +13,11 @@ class App extends Component {
   getListNameThenAddToDatabase = () => {
     const listName = prompt("Enter List Name")
     const dbRef = firebase.database().ref()
-    dbRef.push(listName) 
+    const userObj = {
+      listName: listName,
+      shows: []
+    }
+    dbRef.push(userObj)
   }
 
 
