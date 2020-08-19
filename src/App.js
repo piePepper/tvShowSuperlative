@@ -4,7 +4,7 @@ import ShowGenerator from "./ShowGenerator";
 import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
 import firebase from "./firebase";
-import "./App.css";
+import "./styles/styles.scss";
 import UserList from "./UserList";
 
 class App extends Component {
@@ -24,7 +24,7 @@ class App extends Component {
       <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <header>
-            <h1>Test PiePepper</h1>
+            <h1 className="mainTitle"> PiePepper</h1>
             <button onClick={this.getListNameThenAddToDatabase}>
               Create List
             </button>

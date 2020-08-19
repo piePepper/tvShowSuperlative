@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CardDisplay from "./CardDisplay";
 import Sidebar from "./Sidebar";
 import axios from "axios";
-import "./App.css";
+import "./styles/styles.scss";
 
 //todo Need to bring dropdown info from sidebar and sort displayArray prior to render.
 
