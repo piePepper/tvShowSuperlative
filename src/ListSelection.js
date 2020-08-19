@@ -1,51 +1,57 @@
 import React, { Component } from 'react';
-import firebase from './Firebase'
-
+import firebase from './firebase';
+// import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import UserList from "./UserList";
 class ListSelection extends Component {
     constructor() {
         super();
         this.state = {
-            userSelection: []
+            dbReturn: []
         }
     }
 
-    componentDidMount() {
-    //Variable refers to the firebase database
-    const dbRef = firebase.database().ref()
+// this gets the fire base information and stores it in the state
+    componentDidMount = () => {
+        const dbRef = firebase.database().ref()
+        dbRef.on('value', (snapshot) => {
+            const dbArray = []
+            const dbReturn = snapshot.val()
+            for (let objEntry in dbReturn) {
+                // this line essentially says ONLY display keys that are 14 letters long. since our "global counter list has less than 14 letters it will ignore that."
+                if (objEntry.length > 14) {
+                    dbArray.push({ key: objEntry, name: dbReturn[objEntry] })
+                    console.log(dbArray)
+                }
+            }
 
-    //Event listener when changes are made to database
-    dbRef.on('value', (snapshot) => {
-
-        //Where our data from firebase will be stored 
-        const data = snapshot.val()
-
-        //new array to hold the firebase data
-        const newSelection = []
-
-        //for in loop to, loop through the firebase object push the information stored in the newSelection to the page.
-        for (let key in data) {
-        newSelection.push({key: key, name: data[key]})
-        }
-
-        this.setState({
-            userSelection: newSelection
-        })        
-
-    })
+            this.setState({
+                dbReturn: dbArray
+            })
+        })
     }
+
+    removeList(listID) {
+        const dbRef = firebase.database().ref()
+        dbRef.child(listID).remove()
+    }
+
+
+
 
     render() {
         return (
             <div className="firebase-data">
+                <h1>User Lists</h1>
                 <ul>
-                    {
-                    this.state.userSelection.map( (selection) => {
+                    {this.state.dbReturn.map((listName) => {
                         return (
-                        <li key={selection.key}>
-                                <p>{selection.name}</p>
-
-                        </li>
-
+                            <li key={listName.key}>
+                                <Link to={`/list/${listName.key}`}>
+                                <p>{listName.name}</p>
+                                <button onClick={() => { this.removeList(listName.key) }}>X</button>
+                                </Link>
+                            </li>
                         )
                     })
                     }
@@ -55,5 +61,8 @@ class ListSelection extends Component {
     }
 }
 
+// <Link to={`/movie/${movieObject.id}`}>
+//     <img src={`http://image.tmdb.org/t/p/w500/${movieObject.poster_path}`} alt={`Official Poster for ${movieObject.original_Title}`} />
+// </Link>
 export default ListSelection;
 

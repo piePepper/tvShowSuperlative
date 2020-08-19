@@ -12,15 +12,9 @@ class TvShowCard extends Component {
       url: "https://api.tvmaze.com/shows/" + this.props.match.params.id,
     }).then((response) => {
       console.log(response.data);
-      this.setState({ apiData: response.data });
-
-      // this.setState(
-      //   {
-      //     apiData: response.data,
-      //     filteredData: response.data,
-      //   },
-      //   () => this.sortThis()
-      // );
+      this.setState({ 
+        apiData: response.data 
+      });
     });
   }
   render() {
