@@ -3,28 +3,18 @@ import "./App.css";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 
+//todo Need to bring dropdown info from sidebar and sort displayArray prior to render.
+
 class ShowGenerator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: "",
-            userList: [],
+            query: '',
             chosenFilters: [['language'], ['genres'], ['status'], ['network', 'name']],
             apiData: [],
-            filterArray: [
-                ['','language'],
-                ['', 'genres'],
-                ['', 'status'],
-                ['','network','name'],
-            ],
+            filterArray: [],
             displayArray: [],
         };
-    }
-
-    setFilterArray = (arrayFromSidebar) => {
-        this.setState({
-            // filterArray: BLAH
-        })
     }
 
     apiHandler() {
@@ -36,7 +26,8 @@ class ShowGenerator extends Component {
             .then((response) => {
                 this.setState({
                     apiData: response.data,
-                }, () => this.filterData()); 
+                    displayArray: response.data
+                }); 
             })
         :
             axios({
@@ -45,23 +36,21 @@ class ShowGenerator extends Component {
             .then((response) => {
                 this.setState({
                     apiData: response.data.map( (each) => {
-                        return each.show;
-                    }),
-                }, () => this.filterData());
+                        return each.show;}),
+                    displayArray: response.data.map( (each) => {
+                        return each.show;})
+                });
             })
     }
 
-
-    // Component DidMount occurs only once - cannot update query state
     componentDidMount() {
         this.apiHandler();
     }
 
-    // Updates when setState occurs - takes 2 props previousProps and PreviousStates is a built in funciton
-    componentDidUpdate(previousProps, previousState) {
-        if (previousState.query !== this.state.query) {
-            this.apiHandler();
-        }
+    setSearch = (queryFromSidebar) => {
+        this.setState({
+            query: queryFromSidebar,
+        }, () => this.apiHandler())
     }
 
     filterData() {
@@ -94,12 +83,22 @@ class ShowGenerator extends Component {
         })
     }
 
+    setFilterArray = (arrayFromSidebar) => {
+        let setArray = arrayFromSidebar.filter((each) => {
+            if(each[0] !== '')
+                return each
+        })
+        this.setState({
+            filterArray: setArray,
+        }, () => this.filterData())
+    }
+
     render() {
         return (
             <div className="App">
-                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} querySetter={this.dropDownValueSetter} />
+                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} />
                 {
-                    this.state.apiData.map((each) => {
+                    this.state.displayArray.map((each) => {
                         return (
                             <>
                                 <h3>{each.name}</h3>
