@@ -14,8 +14,16 @@ class SideBar extends Component {
 				['', 'status'],
 				['', 'network', 'name'],
 			],
+			sortArray: [
+				['A-Z','name',],
+				['Z-A', 'name'],
+				['Highest Rated', 'rating'],
+				['Lowest Rated', 'rating'],
+			]
 		};
 	}
+
+	//using function that accepts creates a new single variable based on weather or not a second variable present.
 
 	createFilterArrays = (response) => {
 		let tempFilters = [];
@@ -81,6 +89,10 @@ class SideBar extends Component {
 		})
 	}
 
+	sortHandler = (event) => {
+		
+	}
+
 	sideBarData = (event) => {
 		event.preventDefault();
 		this.props.searchPass(this.state.searchBar);
@@ -95,26 +107,39 @@ class SideBar extends Component {
 				</form>
 				<form>
 					{
-						this.state.filters.map((row, index) => {
+					this.state.filters.map((row, index) => {
+						return (
+							<>
+							<label>
+								{row[1]}
+							</label>
+							<select id={index} name={row[1]} onChange={this.dropHandler}>
+								<option value=''></option>
+								{
+									this.state.filters[index][0].map((each) => {
+										return (
+											<option value={each}>{each}</option>
+										)
+									})
+								}
+							</select>
+							</>
+						)
+					})
+					}
+				<label>
+					Sort By
+				</label>
+				<select id='sortBy' name='sortBy' onChange={this.sortHandler}>
+					<option value=''></option>
+					{
+						this.state.sortArray.map((each) => {
 							return (
-								<>
-									<label>
-										{row[1]}
-									</label>
-									<select id={index} name={row[1]} onChange={this.dropHandler}>
-										<option value=''></option>
-										{
-											this.state.filters[index][0].map((each) => {
-												return (
-													<option value={each}>{each}</option>
-												)
-											})
-										}
-									</select>
-								</>
+								<option value={each[0]}>{each[0]}</option>
 							)
 						})
 					}
+				</select>
 				</form>
 			</div>
 		);

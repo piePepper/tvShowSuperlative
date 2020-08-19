@@ -28,11 +28,11 @@ class ShowGenerator extends Component {
                 this.setState({
                     apiData: response.data,
                     displayArray: response.data
-                }); 
+                }, () => {this.sortThis(this.state.displayArray);this.sortThisAgain(this.state.displayArray)}); 
             })
         :
             axios({
-                url: ` http://api.tvmaze.com/search/shows?q=${this.state.query}`
+                url: `http://api.tvmaze.com/search/shows?q=${this.state.query}`
             })
             .then((response) => {
                 this.setState({
@@ -40,8 +40,26 @@ class ShowGenerator extends Component {
                         return each.show;}),
                     displayArray: response.data.map( (each) => {
                         return each.show;})
-                });
+                }, () => {this.sortThisAgain(this.state.apiData)});
             })
+    }
+
+    sortThis = (data) => {
+        let sortArray = data;
+        sortArray.sort((a, b) => {
+            return b.rating.average - a.rating.average
+        });
+        console.log(sortArray.map((each)=> { return each.rating.average}));
+    }
+
+    sortThisAgain = (data) => {
+        // console.log('im called')
+        let testArray = data;
+        testArray.sort((a,b)=> ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * -1)
+        // console.log(testArray);
+        this.setState({
+            displayArray: testArray,
+        })
     }
 
     componentDidMount() {
@@ -61,18 +79,18 @@ class ShowGenerator extends Component {
             const recursiveFilter = (recursedArray) => {
                 data =  recursedArray.filter((each) => {
                     if( extra !== undefined) {
-                        if (each[`${filter}`] === null ||
-                            each[`${filter}`] === undefined ||
-                            each[`${filter}`][`${extra}`] === null || 
-                            each[`${filter}`][`${extra}`] === undefined)
+                        if (each[filter] === null ||
+                            each[filter] === undefined ||
+                            each[filter][extra] === null || 
+                            each[filter][extra] === undefined)
                         {}
-                        else if(each[`${filter}`][`${extra}`].includes(word)) {
+                        else if(each[filter][extra].includes(word)) {
                                 return each
                         }
                     }
-                    else if(each[`${filter}`] !== null &&
-                            each[`${filter}`] !== undefined &&
-                            each[`${filter}`].includes(word)) {
+                    else if(each[filter] !== null &&
+                            each[filter] !== undefined &&
+                            each[filter].includes(word)) {
                                 return each
                     }
                 })
@@ -83,7 +101,6 @@ class ShowGenerator extends Component {
             displayArray: data,
         })
     }
-
     setFilterArray = (arrayFromSidebar) => {
         let setArray = arrayFromSidebar.filter((each) => {
             if(each[0] !== '')
