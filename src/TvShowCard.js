@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { render } from "@testing-library/react";
+import AddToList from "./AddToList"
 
 class TvShowCard extends Component {
   constructor() {
@@ -31,6 +32,7 @@ class TvShowCard extends Component {
           <li>{data.country}</li>
           <li>{data.genres}</li>
           <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
+          <AddToList id={this.props.match.params.id}/>
         </ul>
       </div>
     );
