@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ShowGenerator from "./ShowGenerator";
+import ListSelection from "./ListSelection";
 import TvShowCard from "./TvShowCard";
-import SideBar from "./SideBar";
-import BodyDisplay from "./CardDisplay";
-import CardGridDisplay from "./CardGridDisplay";
-import MovieGenerator from './MovieGenerator'
-import axios from "axios";
 import firebase from "./firebase";
-import ListSelection from './ListSelection';
-import { BrowserRouter as Router, Route }from "react-router-dom";
+import "./App.css";
 
 class App extends Component {
 
@@ -19,6 +15,7 @@ class App extends Component {
     dbRef.push(listName) 
   }
 
+
   render() {
     return (
       <Router>
@@ -27,22 +24,13 @@ class App extends Component {
             <h1>Test PiePepper</h1>
             <button onClick={this.getListNameThenAddToDatabase}>Create List</button>
           </header>
-          <TvShowCard
-            title="Girls"
-            img="fikjsklfjksd"
-            alt="img is broken"
-            network="HBO"
-            country="India"
-            genre="Comedy"
-            description="Must watch"
-          />
           <ListSelection />
+          <Route exact path="/" component={ShowGenerator} />
+          <Route path="/show/:id" component={TvShowCard} />
         </div>
       </Router>
-    )
+    );
   }
 }
-// import Firebase from "./Firebase";
-// import ListSelection from "./ListSelection";
 
 export default App;

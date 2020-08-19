@@ -29,7 +29,6 @@ class ListSelection extends Component {
         })
     }
 
-
     removeList(listID) {
         const dbRef = firebase.database().ref()
         dbRef.child(listID).remove()
