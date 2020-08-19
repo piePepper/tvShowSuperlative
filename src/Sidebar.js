@@ -5,6 +5,7 @@ class SideBar extends Component {
     super();
     this.state = {
       filters: [],
+      returnFilter: [[],[],[],[]],
     };
   }
 
@@ -19,7 +20,6 @@ class SideBar extends Component {
     this.props.chosenFilters.forEach((each,index) => {
       let tempArray = [];
       let [key, subKey] = each;
-      console.log(key, subKey);
       if(subKey === undefined){
         response.forEach((single) => {
             if (single[`${key}`] === null || single[`${key}`] === undefined) 
@@ -50,63 +50,58 @@ class SideBar extends Component {
             }
         })
       }
-      // console.log(tempArray.sort());
-      this.setState({
-      })
-    tempFilters.push([tempArray,[key],[subKey]])
+      tempFilters.push([tempArray.sort(),[key],[subKey]])
     })
-    console.log(tempFilters);
     this.setState({
       filters: tempFilters,
-    }, () => console.log(this.state.filters))
-    
+    })
   }
 
-  // getfiltered data is on App.js
-  genreHandler = (event) => {
+  changeHandler = (event) => {
+    let tempArray = this.state.returnFilter;
+    (event.target.value === '') 
+    ?
+      tempArray[`${event.target.id}`] = []
+    : 
+      tempArray[`${event.target.id}`] = [event.target.value,event.target.name]
+    console.log(tempArray)
     this.setState({
-      genre: event.target.value,
-    });
-    this.props.getFiltereddata(event.target.value);
+      returnFilter: tempArray
+    }, () => console.log(this.state.returnFilter));
   };
 
   sideBarData = () => {
-    //   this fucntion will change state of query in parent component
+    //   this function will change state of query in parent component
     this.props.onChangeQueryHandler(this.state.searchQuery);
   };
   render() {
     return (
-      <div className="SideBar">
-        <form className="SideBarForm">
-          <input
-            className="searchQuery"
-            type="text"
-            placeholder="Search"
-            value={this.state.searchQuery}
-            onChange={this.searchQueryHandler}
-          />
-                  {/* Creating clickhanlder through sideBarData that will send data to the parent --> App.js */}
-        <button className="sideBarSearchBtn" onClick={this.sideBarData}>
-          Search
-        </button>
+      <div>
+        <form>
+          <input type="text" placeholder="Search" value={this.state.searchQuery} onChange={this.searchQueryHandler}/>
+        <button className="sideBarSearchBtn" onClick={this.sideBarData}>Search</button>
         </form>
         <form>
           {
-
-          <label>
-            Language
-            {/* use map to get this */}
-            <select value={this.state.genre} onChange={this.genreHandler}>
-              <option value="Any">Any</option>
-              <option value="Action">Action</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Anime">Anime</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Drama">Drama</option>
-              <option value="Family">Family</option>
-              <option value="Romance">Romance</option>
-            </select>
-          </label>
+            this.state.filters.map((row,index) => {
+              return(
+                <>
+                <label>
+                  {`${row[1]}`}
+                </label>
+                <select id={`${index}`} name={`${row[1]}`} onChange={this.changeHandler}>
+                  <option value=''></option>
+                  {
+                    this.state.filters[index][0].map( (each) => {
+                      return (
+                        <option value={`${each}`}>{`${each}`}</option>
+                      )
+                    })
+                  }
+                </select>
+                </>
+              )
+            })
           }
         </form>
       </div>
@@ -127,3 +122,17 @@ export default SideBar;
   //     })
   // }
   //!
+
+
+  //   Language
+  // {/* use map to get this */}
+  // <select value={this.state.genre} onChange={this.genreHandler}>
+  //   <option value="Any">Any</option>
+  //   <option value="Action">Action</option>
+  //   <option value="Adventure">Adventure</option>
+  //   <option value="Anime">Anime</option>
+  //   <option value="Comedy">Comedy</option>
+  //   <option value="Drama">Drama</option>
+  //   <option value="Family">Family</option>
+  //   <option value="Romance">Romance</option>
+  // </select> */

@@ -11,14 +11,20 @@ class ShowGenerator extends Component {
             userList: [],
             chosenFilters: [['language'], ['genres'], ['status'], ['network', 'name']],
             apiData: [],
-            returnedArray: [
-                ['English','language'],
-                ['Comedy', 'genres'],
-                ['Running', 'status'],
-                ['The CW','network','name'],
+            filterArray: [
+                ['','language'],
+                ['', 'genres'],
+                ['', 'status'],
+                ['','network','name'],
             ],
             displayArray: [],
         };
+    }
+
+    setFilterArray = (arrayFromSidebar) => {
+        this.setState({
+            // filterArray: BLAH
+        })
     }
 
     apiHandler() {
@@ -60,7 +66,7 @@ class ShowGenerator extends Component {
 
     filterData() {
         let data = this.state.apiData
-        this.state.returnedArray.forEach((filterItem) => {
+        this.state.filterArray.forEach((filterItem) => {
             let [word, filter, extra] = filterItem;
             const recursiveFilter = (recursedArray) => {
                 data =  recursedArray.filter((each) => {
