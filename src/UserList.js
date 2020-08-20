@@ -11,6 +11,8 @@ class UserList extends Component {
             displayListInfo: {},
             displayArray: [],
             arrayWithShowIDs: [],
+            sortedArray: [],
+
         };
     }
     componentDidMount() {
@@ -23,9 +25,34 @@ class UserList extends Component {
             }
             this.setState({
                 displayListInfo: dbReturn,
-                arrayWithShowIDs: idArray
-            }, () => this.createUserListDisplay())
+            })
+            this.sortArray()
+            this.createUserListDisplay()
         })
+    }
+
+    sortArray = () => {
+        const unsortedArray = []
+        const unsortedObj = this.state.displayListInfo.shows
+        for (let shows in unsortedObj) {
+            unsortedArray.push({ showID: parseInt(shows), counter: unsortedObj[shows].counter })
+        }
+        const sortedArray = unsortedArray.sort(function (a, b) {
+            return b.counter - a.counter
+        })
+        const sortedArrayWithID = sortedArray.map(x => x.showID)
+        this.setState({
+            arrayWithShowIDs: sortedArrayWithID
+        })
+    }
+
+    counterFunc = (event) => {
+        const dbRef = firebase.database().ref(this.props.match.params.listid).child("shows")
+        const showID = event.target.getAttribute("showid")
+        const myNum = parseInt(event.target.value)
+        const origNum = this.state.displayListInfo.shows[showID].counter
+        dbRef.child(showID).update({ counter: (origNum + myNum) })
+        this.sortArray()
     }
 
     //Loops through the users array of shows to get a set of tv show data.
@@ -52,9 +79,12 @@ class UserList extends Component {
                     this.state.displayArray.map((each) => {
                         return (
                             <>
+                                {/* {console.log(this.state.displayArray, "CC this is the display array that's mapped")} */}
                                 <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
                                 <h4 className='bodyCardRating'>{each.rating.average}</h4>
                                 <h3 className='bodyCardTitle'>{each.name}</h3>
+                                <button onClick={this.counterFunc} showid={each.id} value={1}> UpVote </button>
+                                <button onClick={this.counterFunc} showid={each.id} value={-1}> DownVote </button>
                             </>
                         )
                     })
