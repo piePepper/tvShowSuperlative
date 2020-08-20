@@ -15,15 +15,13 @@ class SideBar extends Component {
 				['', 'network', 'name'],
 			],
 			sortArray: [
-				['A-Z','name',],
-				['Z-A', 'name'],
-				['Highest Rated', 'rating'],
-				['Lowest Rated', 'rating'],
+				['A-Z','name','1'],
+				['Z-A', 'name','-1'],
+				['Highest Rated', 'rating','1'],
+				['Lowest Rated', 'rating','-1'],
 			]
 		};
 	}
-
-	//using function that accepts creates a new single variable based on weather or not a second variable present.
 
 	createFilterArrays = (response) => {
 		let tempFilters = [];
@@ -90,7 +88,7 @@ class SideBar extends Component {
 	}
 
 	sortHandler = (event) => {
-		
+		this.props.sortPass(event.target.value.split(','))
 	}
 
 	sideBarData = (event) => {
@@ -135,7 +133,7 @@ class SideBar extends Component {
 					{
 						this.state.sortArray.map((each) => {
 							return (
-								<option value={each[0]}>{each[0]}</option>
+								<option value={[each[1],each[2]]}>{each[0]}</option>
 							)
 						})
 					}
@@ -147,15 +145,3 @@ class SideBar extends Component {
 }
 
 export default SideBar;
-
-  //! I may need this for setting the sorting dropdown
-  // sortThis = () => {
-  //     let sortArray = this.state.apiData;
-  //     sortArray.sort((a, b) => {
-  //         return b.rating.average - a.rating.average
-  //     });
-  //     this.setState({
-  //         sortedData: sortArray,
-  //     })
-  // }
-  //!

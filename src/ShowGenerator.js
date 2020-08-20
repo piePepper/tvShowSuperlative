@@ -28,7 +28,7 @@ class ShowGenerator extends Component {
                 this.setState({
                     apiData: response.data,
                     displayArray: response.data
-                }, () => {this.sortThis(this.state.displayArray);this.sortThisAgain(this.state.displayArray)}); 
+                }); 
             })
         :
             axios({
@@ -40,26 +40,30 @@ class ShowGenerator extends Component {
                         return each.show;}),
                     displayArray: response.data.map( (each) => {
                         return each.show;})
-                }, () => {this.sortThisAgain(this.state.apiData)});
+                });
             })
     }
 
-    sortThis = (data) => {
-        let sortArray = data;
+    ratingSort = (order) => {
+        let sortArray = this.state.displayArray;
         sortArray.sort((a, b) => {
-            return b.rating.average - a.rating.average
+            return ((b.rating.average > a.rating.average) ? 1 : -1) * order
         });
-        console.log(sortArray.map((each)=> { return each.rating.average}));
+        this.setState({
+            displayArray: sortArray,
+        })
+    }
+    
+    nameSort = (order) => {
+        let sortArray = this.state.displayArray;
+        sortArray.sort((a,b)=> ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * order)
+        this.setState({
+            displayArray: sortArray,
+        })
     }
 
-    sortThisAgain = (data) => {
-        // console.log('im called')
-        let testArray = data;
-        testArray.sort((a,b)=> ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * -1)
-        // console.log(testArray);
-        this.setState({
-            displayArray: testArray,
-        })
+    sortFunc = (settings) => {
+        settings[0] === 'name' ? this.nameSort(settings[1]) : this.ratingSort(settings[1])
     }
 
     componentDidMount() {
@@ -114,7 +118,7 @@ class ShowGenerator extends Component {
     render() {
         return (
             <div className="App">
-                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} />
+                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} sortPass={this.sortFunc}/>
                 <CardDisplay data={this.state.displayArray} />
             </div>
         );
