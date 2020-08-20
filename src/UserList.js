@@ -46,7 +46,7 @@ class UserList extends Component {
                     this.state.displayArray.map((each) => {
                         return (
                             <>
-                                <img src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
+                                <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
                                 <h4 className='bodyCardRating'>{each.rating.average}</h4>
                                 <h3 className='bodyCardTitle'>{each.name}</h3>
                             </>
