@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 
 class SideBar extends Component {
-	constructor() {
-		super();
-		this.state = {
-			searchBar: '',
-			filters: [],
-			returnFilter: [
-				['', 'language'],
-				['', 'genres'],
-				['', 'status'],
-				['', 'network', 'name'],
-			],
-			sortArray: [
-				['A-Z','name','1'],
-				['Z-A', 'name','-1'],
-				['Highest Rated', 'rating','1'],
-				['Lowest Rated', 'rating','-1'],
-			]
-		};
-	}
+  constructor() {
+    super();
+    this.state = {
+      searchBar: "",
+      filters: [],
+      returnFilter: [
+        ["", "language"],
+        ["", "genres"],
+        ["", "status"],
+        ["", "network", "name"],
+      ],
+      sortArray: [
+        ["A-Z", "name", "1"],
+        ["Z-A", "name", "-1"],
+        ["Highest Rated", "rating", "1"],
+        ["Lowest Rated", "rating", "-1"],
+      ],
+    };
+  }
 
 	//this ugly behemoth of a function is designed to scour all the data from our 
 	//returned api call and dynamically add any unique results to the filter options on the left.
@@ -116,17 +116,17 @@ class SideBar extends Component {
 
 	render() {
 		return (
-			<div>
-				<form>
-					<input type="text" placeholder="Search" onChange={this.searchHandler} />
-					<button className="sideBarSearchBtn" onClick={this.sideBarData}>Search</button>
+		<div className="queryContainer">
+					<form>
+					<input type="text" placeholder="Search" onChange={this.searchHandler} className="searchBox" />
+					<button className="sideBarSearchBtn" onClick={this.sideBarData}>Search </button>
 				</form>
-				<form>
+				<form className="criteriaContainer">
 				{
 				this.state.filters.map((row, index) => {
 					return (
 						<>
-						<label>
+						<label className="languageContainer">
 							{row[1]}
 						</label>
 						<select id={index} name={row[1]} onChange={this.dropHandler}>
@@ -143,9 +143,7 @@ class SideBar extends Component {
 					)
 				})
 				}
-				<label>
-					Sort By
-				</label>
+				<label className="sortByContainer">Sort By</label>
 				<select id='sortBy' name='sortBy' onChange={this.sortHandler}>
 					<option value=''></option>
 					{
