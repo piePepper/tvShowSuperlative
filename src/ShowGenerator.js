@@ -21,28 +21,50 @@ class ShowGenerator extends Component {
 
     apiHandler() {
         this.state.query === ''
-        ?
+            ?
             axios({
                 url: 'https://api.tvmaze.com/shows'
-            })
-            .then((response) => {
+            }).then((response) => {
                 this.setState({
                     apiData: response.data,
                     displayArray: response.data
-                }); 
-            })
-        :
-            axios({
-                url: ` http://api.tvmaze.com/search/shows?q=${this.state.query}`
-            })
-            .then((response) => {
-                this.setState({
-                    apiData: response.data.map( (each) => {
-                        return each.show;}),
-                    displayArray: response.data.map( (each) => {
-                        return each.show;})
                 });
             })
+            :
+            axios({
+                url: `http://api.tvmaze.com/search/shows?q=${this.state.query}`
+            }).then((response) => {
+                this.setState({
+                    apiData: response.data.map((each) => {
+                        return each.show;
+                    }),
+                    displayArray: response.data.map((each) => {
+                        return each.show;
+                    })
+                }, console.log(this.state.displayArray));
+            })
+    }
+
+    ratingSort = (order) => {
+        let sortArray = this.state.displayArray;
+        sortArray.sort((a, b) => {
+            return ((b.rating.average > a.rating.average) ? 1 : -1) * order
+        });
+        this.setState({
+            displayArray: sortArray,
+        })
+    }
+
+    nameSort = (order) => {
+        let sortArray = this.state.displayArray;
+        sortArray.sort((a, b) => ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * order)
+        this.setState({
+            displayArray: sortArray,
+        })
+    }
+
+    sortFunc = (settings) => {
+        settings[0] === 'name' ? this.nameSort(settings[1]) : this.ratingSort(settings[1])
     }
 
     componentDidMount() {
@@ -60,21 +82,20 @@ class ShowGenerator extends Component {
         this.state.filterArray.forEach((filterItem) => {
             let [word, filter, extra] = filterItem;
             const recursiveFilter = (recursedArray) => {
-                data =  recursedArray.filter((each) => {
-                    if( extra !== undefined) {
-                        if (each[`${filter}`] === null ||
-                            each[`${filter}`] === undefined ||
-                            each[`${filter}`][`${extra}`] === null || 
-                            each[`${filter}`][`${extra}`] === undefined)
-                        {}
-                        else if(each[`${filter}`][`${extra}`].includes(word)) {
-                                return each
+                data = recursedArray.filter((each) => {
+                    if (extra !== undefined) {
+                        if (each[filter] === null ||
+                            each[filter] === undefined ||
+                            each[filter][extra] === null ||
+                            each[filter][extra] === undefined) { }
+                        else if (each[filter][extra].includes(word)) {
+                            return each
                         }
                     }
-                    else if(each[`${filter}`] !== null &&
-                            each[`${filter}`] !== undefined &&
-                            each[`${filter}`].includes(word)) {
-                                return each
+                    else if (each[filter] !== null &&
+                        each[filter] !== undefined &&
+                        each[filter].includes(word)) {
+                        return each
                     }
                 })
             }
@@ -84,10 +105,9 @@ class ShowGenerator extends Component {
             displayArray: data,
         })
     }
-
     setFilterArray = (arrayFromSidebar) => {
         let setArray = arrayFromSidebar.filter((each) => {
-            if(each[0] !== '')
+            if (each[0] !== '')
                 return each
         })
         this.setState({
@@ -99,11 +119,11 @@ class ShowGenerator extends Component {
         return (
             <div className="showGeneratorContainer">
                 <div className="sideBarContainer">
-                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} />
-                <ListSelection />
+                    <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} sortPass={this.sortFunc} />
+                    <ListSelection />
                 </div>
                 <div className="cardDisplayContainer">
-                <CardDisplay data={this.state.displayArray} />
+                    <CardDisplay data={this.state.displayArray} />
                 </div>
             </div>
         );

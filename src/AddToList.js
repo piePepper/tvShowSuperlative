@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import firebase from './firebase';
-import { Link } from "react-router-dom";
 
-class ListSelection extends Component {
+
+// this component adds the show ID to a specific user list
+
+class AddToList extends Component {
     constructor() {
         super();
         this.state = {
@@ -21,30 +23,40 @@ class ListSelection extends Component {
                     dbArray.push({ key: objEntry, name: dbReturn[objEntry] })
                 }
             }
+            // console.log(dbArray, "this is my database array")
             this.setState({
                 dbReturn: dbArray
             })
         })
     }
 
-    removeList(listID) {
+    // the remove function doesn't work just yet 
+
+    // removeList(listID) {
+    //     const dbRef = firebase.database().ref()
+    //     dbRef.child(listID).remove()
+    // }
+
+    setNewShow = (event) => {
+        event.preventDefault()
         const dbRef = firebase.database().ref()
-        dbRef.child(listID).remove()
+        const path = event.target.getAttribute('path')
+        const showID = event.target.getAttribute('showid')
+        dbRef.child(path).child("shows").child(`${showID}`).update({ counter: 0 })
     }
 
     render() {
         return (
             <div className="firebase-data">
                 <h1>User Lists</h1>
+                {/* {console.log(parseInt(this.props.id))} */}
                 <ul>
                     {this.state.dbReturn.map((entry) => {
                         return (
-                            <li key={entry.key}>
-                                <Link to={`/list/${entry.key}`}>
-                                    <p>{entry.name.listName}</p>
-                                    <button onClick={() => { this.removeList(entry.key) }}>X</button>
-                                </Link>
-                            </li>
+                            <button key={entry.key} path={entry.key} showid={(parseInt(this.props.id))}
+                                onClick={this.setNewShow}>
+                                Add to {entry.name.listName}
+                            </button>
                         )
                     })}
                 </ul>
@@ -53,5 +65,5 @@ class ListSelection extends Component {
     }
 }
 
-export default ListSelection;
+export default AddToList;
 
