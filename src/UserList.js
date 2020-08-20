@@ -12,8 +12,7 @@ class UserList extends Component {
             displayListInfo: {},
             displayArray: [],
             arrayWithShowIDs: [],
-            testRender: ['peanuit','walnut','burgernut','blahnut','thisisnuts','dont know','why this is','happening'],
-        }
+        };
     }
     //Okay, just a tip, once you get your array of tv id's, use a foreach to loop over the array and replace 599 in this endpoint with each show id and push to a temp array:
 
@@ -31,45 +30,31 @@ class UserList extends Component {
             }, () => this.createUserListDisplay())
         })
     }
-    //! THIS IS THE USER LIST GENERATOR.
+
     createUserListDisplay = () => {
-        let storeArray = [];
-        console.log(Array.isArray(storeArray),typeof(storeArray));
         let promiseArray = [];
+        console.log(this.state.arrayWithShowIDs);
         this.state.arrayWithShowIDs.forEach((each) => {
-            axios({
-                url: `https://api.tvmaze.com/shows/${each}`
-            }).then((response) => {
-                storeArray.push(response.data)
-                promiseArray.push(response);
-            });
+            promiseArray.push(axios({url: `https://api.tvmaze.com/shows/${each}`}))
         })
-        Promise.all(promiseArray).then(()=> {
-            console.log(typeof(storeArray));
+        Promise.all(promiseArray).then((item)=> {
+            let storeArray = item.map((each) => { return each.data });
             this.setState({
                 displayArray: storeArray,
-            }, () => {console.log(this.state.displayArray)});
+            })
         });
     }
 
     render() {
         return (
             <>
-            <h1>hellllo</h1>
-			{
-			this.state.testRender.map((item) => {
-				return (
-					<div>
-                        <h2>{item}</h2>
-					</div>
-				)
-			})
-			}
             {
-            this.state.displayArray.map((item) => {
+            this.state.displayArray.map((each) => {
                 return(
                 <>
-                    <h1>{item.name}</h1>
+                    <img src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
+                    <h4 className='bodyCardRating'>{each.rating.average}</h4>
+                    <h3 className='bodyCardTitle'>{each.name}</h3>
                 </>
                 )
             })

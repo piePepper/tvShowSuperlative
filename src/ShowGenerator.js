@@ -41,7 +41,7 @@ class ShowGenerator extends Component {
                     displayArray: response.data.map((each) => {
                         return each.show;
                     })
-                });
+                }, console.log(this.state.displayArray));
             })
     }
 
