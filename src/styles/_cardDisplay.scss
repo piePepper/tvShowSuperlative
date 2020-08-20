@@ -1,15 +1,29 @@
 //Card Display
-.cardContainer {
-    display: flex;
-    flex-wrap: wrap;
+.cardDisplayContainer { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
 }
+
+// .cardContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+// }
 
 .cardContainer img {
     max-width: 100%
 }
 
 .movieContainer {
-    width: 20%;
+    width: 100%;
     background: white;
     padding: 15px;
+
+    img {
+        width: 100%;
+    }
+}
+
+.sideBarContainer {
+    display: flex;
+    flex-direction: column;
 }

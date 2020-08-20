@@ -1,6 +1,7 @@
 //Side Bar Styles
 .showGeneratorContainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 9fr;
 }
 
 .searchBox {
