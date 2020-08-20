@@ -10,9 +10,9 @@ class UserList extends Component {
         super();
         this.state = {
             displayListInfo: {},
-            displayArray: [],
             arrayWithShowIDs: [],
-        };
+            sortedArray: []
+        }
     }
 
     componentDidMount() {
@@ -23,7 +23,6 @@ class UserList extends Component {
             for (let objEntry in dbReturn.shows) {
                 idArray.push(parseInt(objEntry))
             }
-
             this.setState({
                 displayListInfo: dbReturn,
                 arrayWithShowIDs: idArray
@@ -44,9 +43,34 @@ class UserList extends Component {
         });
     }
 
+    counterFunc = (event) => {
+        const dbRef = firebase.database().ref(this.props.match.params.listid).child("shows")
+        const showID = event.target.getAttribute("showid")
+        const myNum = parseInt(event.target.value)
+        const origNum = this.state.displayListInfo.shows[showID].counter
+        dbRef.child(showID).update({ counter: (origNum + myNum) })
+        const unsortedObj = this.state.displayListInfo.shows
+        const unsortedArray = []
+        for (let shows in unsortedObj) {
+            unsortedArray.push({ showID: parseInt(shows), counter: unsortedObj[shows].counter })
+        }
+        const sortedArray = unsortedArray.sort(function (a, b) {
+            return a.counter - b.counter
+        })
+        this.setState({
+            sortedArray: sortedArray
+        })
+        console.log(this.state.sortedArray, "This is my sortedArr")
+    }
+
     render() {
         return (
             <>
+           <h1>{this.state.displayListInfo.listName}</h1>
+                {console.log(this.state.arrayWithShowIDs)}
+                <button onClick={this.counterFunc} showid={8} value={1}> UpVote </button>
+                <button onClick={this.counterFunc} showid={8} value={-1}> DownVote </button>
+
             {
             this.state.displayArray.map((each) => {
                 return(
