@@ -1,11 +1,9 @@
 import React, { Component } from "react";
+import ListSelection from './ListSelection';
 import CardDisplay from "./CardDisplay";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import "./styles/styles.scss";
-import ListSelection from './ListSelection';
-
-//todo Need to bring dropdown info from sidebar and sort displayArray prior to render.
 
 class ShowGenerator extends Component {
     constructor(props) {
@@ -19,6 +17,9 @@ class ShowGenerator extends Component {
         };
     }
 
+    //apiHandler handles the axios calls and returns an array of results by default
+    //it will also be called anytime query is updated from the search bar, and
+    // all results returned dynamically, of course.
     apiHandler() {
         this.state.query === ''
             ?
@@ -41,42 +42,29 @@ class ShowGenerator extends Component {
                     displayArray: response.data.map((each) => {
                         return each.show;
                     })
-                }, console.log(this.state.displayArray));
+                });
             })
     }
 
-    ratingSort = (order) => {
-        let sortArray = this.state.displayArray;
-        sortArray.sort((a, b) => {
-            return ((b.rating.average > a.rating.average) ? 1 : -1) * order
-        });
-        this.setState({
-            displayArray: sortArray,
-        })
-    }
-
-    nameSort = (order) => {
-        let sortArray = this.state.displayArray;
-        sortArray.sort((a, b) => ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * order)
-        this.setState({
-            displayArray: sortArray,
-        })
-    }
-
-    sortFunc = (settings) => {
-        settings[0] === 'name' ? this.nameSort(settings[1]) : this.ratingSort(settings[1])
-    }
-
+    //when page loads, fire the api to get some results immediately
     componentDidMount() {
         this.apiHandler();
     }
 
+    //take the input from the search bar and set the state in ShowGenerator
+    //so the results can be update and will show.
     setSearch = (queryFromSidebar) => {
         this.setState({
             query: queryFromSidebar,
         }, () => this.apiHandler())
     }
 
+    //this filter will loop through a list of returned filters (any drop down value the user has set)
+    //and apply them recursively to the list of shows to be displayed.
+    //this funciton could be cleaned up by likely using the extra word defined/undefined to 
+    //set a var so that there are fewer if statements, but we ran out of time. This is something I would like to
+    //go back and refactor.
+    //we hit some nulls/undefined at times in our data, so we need to error handle here in this function.
     filterData() {
         let data = this.state.apiData
         this.state.filterArray.forEach((filterItem) => {
@@ -105,6 +93,13 @@ class ShowGenerator extends Component {
             displayArray: data,
         })
     }
+
+    //taking a returned array from sidebar, and filtering it so that any index
+    //that doesn't have the a value in index 0 is not put into the array as it
+    // doesn't have an appropriate value for the filterData function that is called
+    // as it was not set by user.
+    //this will fire anytime a user updates their filters, and automatically filter the
+    //displayed results.
     setFilterArray = (arrayFromSidebar) => {
         let setArray = arrayFromSidebar.filter((each) => {
             if (each[0] !== '')
@@ -113,6 +108,37 @@ class ShowGenerator extends Component {
         this.setState({
             filterArray: setArray,
         }, () => this.filterData())
+    }
+
+    //this sorts any numerical rating that we decide to add a filter for
+    // the order argument can be set to 1 or -1 to allow for reversing the order
+    // returned.
+    ratingSort = (order) => {
+        let sortArray = this.state.displayArray;
+        sortArray.sort((a, b) => {
+            return ((b.rating.average > a.rating.average) ? 1 : -1) * order
+        });
+        this.setState({
+            displayArray: sortArray,
+        })
+    }
+
+    //this sorts any name rating that we decide to add a filter for
+    // the order argument can be set to 1 or -1 to allow for reversing the order
+    // returned.
+    nameSort = (order) => {
+        let sortArray = this.state.displayArray;
+        sortArray.sort((a, b) => ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1) * order)
+        this.setState({
+            displayArray: sortArray,
+        })
+    }
+
+    //decide which sort to fire based on the data returned.
+    //this is a brute force type approach, there is probably a nicer way to implement a sort
+    //that doesn't require firing different sort functions, but we couldn't do it in time. 
+    sortFunc = (settings) => {
+        settings[0] === 'name' ? this.nameSort(settings[1]) : this.ratingSort(settings[1])
     }
 
     render() {
