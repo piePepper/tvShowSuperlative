@@ -1,6 +1,4 @@
 //Card Display
-
-
 .cardDisplayContainer{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -17,7 +15,7 @@
 .movieContainer {
     width: 100%;
     background: white;
-    padding: 15px;
+    padding: 10px;
 }
 
 img {
