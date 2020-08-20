@@ -44,14 +44,6 @@ class UserList extends Component {
             arrayWithShowIDs: sortedArrayWithID
         })
     }
-    const sortedArray = unsortedArray.sort(function (a, b) {
-      return b.counter - a.counter;
-    });
-    const sortedArrayWithID = sortedArray.map((x) => x.showID);
-    this.setState({
-      arrayWithShowIDs: sortedArrayWithID,
-    });
-  };
 
   counterFunc = (event) => {
     const dbRef = firebase
@@ -86,28 +78,23 @@ class UserList extends Component {
   };
   render() {
     return (
-      <>
-        {this.state.displayArray.map((each) => {
-          return (
-            <>
-                {
-                    this.state.displayArray.map((each) => {
-                        return (
-                            <>
-                                <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
-                                <h4 className='bodyCardRating'>{each.rating.average}</h4>
-                                <h3 className='bodyCardTitle'>{each.name}</h3>
-                                <button onClick={this.counterFunc} showid={each.id} value={1}> UpVote </button>
-                                <button onClick={this.counterFunc} showid={each.id} value={-1}> DownVote </button>
-                            </>
-                        )
-                    })
-                }
-            </>
-          );
-        })}
-      </>
-    );
-  }
+            <div>
+            {
+                this.state.displayArray.map((each) => {
+                    return (
+                        <>
+                            <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
+                            <h4 className='bodyCardRating'>{each.rating.average}</h4>
+                            <h3 className='bodyCardTitle'>{each.name}</h3>
+                            <button onClick={this.counterFunc} showid={each.id} value={1}> UpVote </button>
+                            <button onClick={this.counterFunc} showid={each.id} value={-1}> DownVote </button>
+                        </>
+                    )
+                })
+            }
+        </div>
+        )
+      
+    }
 }
-export default UserList;
+export default UserList
