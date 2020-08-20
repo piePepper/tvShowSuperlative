@@ -28,13 +28,13 @@ class UserList extends Component {
             }
            
 // start of what I copied over from the previous axios call
-        axios({
-            url: "https://api.tvmaze.com/shows/" + this.props.match.params.id,
-            }).then((response) => {
-                this.setState({
-                    apiData: response.data
-                });
-            });
+        // axios({
+        //     url: "https://api.tvmaze.com/shows/" + this.props.match.params.id,
+        //     }).then((response) => {
+        //         this.setState({
+        //             apiData: response.data
+        //         });
+        //     });
 // end of what I copied over from the previous axios call. 
             
             console.log(idArray, "idArray")
