@@ -1,10 +1,14 @@
 //Card Display
-
-
-.cardDisplayContainer{
+.cardDisplayContainer { 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+
 }
+// .cardContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+// }
+
 // .cardContainer {
 //     display: flex;
 //     flex-wrap: wrap;
@@ -22,4 +26,5 @@
 
 img {
     width: 100%;
+
 }
