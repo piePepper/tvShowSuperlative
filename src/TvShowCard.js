@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { render } from "@testing-library/react";
 import AddToList from "./AddToList";
 
 class TvShowCard extends Component {
