@@ -43,6 +43,7 @@ class CardDisplay extends Component {
 			</>
 		);
 	}
+
 }
 
 export default CardDisplay;

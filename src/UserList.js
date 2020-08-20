@@ -23,6 +23,7 @@ class UserList extends Component {
             for (let objEntry in dbReturn.shows) {
                 idArray.push(parseInt(objEntry))
             }
+
             this.setState({
                 displayListInfo: dbReturn,
                 arrayWithShowIDs: idArray
