@@ -1,6 +1,7 @@
 //Side Bar Styles
 .showGeneratorContainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 9fr;
 }
 
 .searchBox {
@@ -63,4 +64,15 @@
     text-transform: uppercase;
     font-family: $font;
 
+}
+
+.firebase-data p {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+.firebase-data ul {
+    margin: 0;
+    padding: 0;
 }

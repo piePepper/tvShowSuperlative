@@ -26,7 +26,7 @@ class CardDisplay extends Component {
 
   render() {
       return (
-        <div className="cardContainer">
+        <>
           {
             this.state.displayArray.map((each) => {
               return(
@@ -40,7 +40,7 @@ class CardDisplay extends Component {
               )
             })
           }
-        </div>
+        </>
       );
     }
 }
