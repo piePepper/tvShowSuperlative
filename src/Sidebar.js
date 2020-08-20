@@ -21,6 +21,16 @@ class SideBar extends Component {
 		};
 	}
 
+	//this ugly behemoth of a function is designed to scour all the data from our 
+	//returned api call and dynamically add any unique results to the filter options on the left.
+	//we have to setup state before hand, but by adding a new filter to chosenFilter we can
+	//automatically create a list of filter terms for any api result.
+	//Given time this could clearly be refactored, but it was one of the first functions created, and
+	//didn't have time to look back.
+	//Rather than have if/else for subke === undefined, I would likely make a single statement that
+	//created the appropriate variable for all 4 if/else situations below.
+	//doing so, I could use a single null || undefined statement to fill the filter lists.
+	//anyways, if wishes were horses...
 	createFilterArrays = (response) => {
 		let tempFilters = [];
 		this.props.chosenFilters.forEach((each, index) => {
@@ -61,12 +71,16 @@ class SideBar extends Component {
 		})
 	}
 
+	//anytime the props change, fire the createFilters array so we always
+	//have up to date options in our filters.
 	componentDidUpdate(previousProps, previousState) {
 		if (previousProps.apiData !== this.props.apiData) {
 			this.createFilterArrays(this.props.apiData);
 		}
 	}
 
+	//this creates and returns to ShowGenerator, the array used
+	// to filter the displayed results on the main page.
 	dropHandler = (event) => {
 		let tempArray = this.state.returnFilter;
 		(event.target.value === '')
@@ -79,17 +93,22 @@ class SideBar extends Component {
 		}, () => this.props.bringItOnBack(this.state.returnFilter));
 	};
 
+	//takes search value and sets it on change ready to be sent back
+	//for our API to use in ShowGenerator.
 	searchHandler = (event) => {
 		this.setState({
 			searchBar: event.target.value
 		})
 	}
 
+	//pass back the sorting information to ShowGenerator.
+	//it's a string with a comma that separates two values,
+	//so split on the comma and return to two values we want.
 	sortHandler = (event) => {
 		this.props.sortPass(event.target.value.split(','))
 	}
 
-
+	//send back searchBar values to ShowGenerator to use.
 	sideBarData = (event) => {
 		event.preventDefault();
 		this.props.searchPass(this.state.searchBar);

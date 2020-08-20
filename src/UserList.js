@@ -27,6 +27,12 @@ class UserList extends Component {
             }, () => this.createUserListDisplay())
         })
     }
+
+    //Loops through the users array of shows to get a set of tv show data.
+    //We only want the shows to display when all are ready, so we store
+    //the returned promises in promiseArray and use PromiseAll to fire
+    //when they are all successful.
+
     createUserListDisplay = () => {
         let promiseArray = [];
         this.state.arrayWithShowIDs.forEach((each) => {

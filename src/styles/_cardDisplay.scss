@@ -2,7 +2,6 @@
 .cardDisplayContainer { 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-
 }
 // .cardContainer {
 //     display: flex;
@@ -22,9 +21,13 @@
     width: 100%;
     background: white;
     padding: 15px;
+    
+        img {
+            width: 100%;
+        }
 }
 
-img {
-    width: 100%;
-
+.sideBarContainer {
+    display: flex;
+    flex-direction: column;
 }
