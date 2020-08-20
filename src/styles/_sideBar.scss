@@ -24,12 +24,12 @@
 .sideBarSearchBtn {
     width: 79%;
     background: $coral;
-    border: none;
+    border: 2px solid black;
     color: $blue;
     border-radius: 4px;
     padding: 5px;
     font-size: 0.8rem;
-    margin-bottom: 15px;
+    margin-bottom: 45px;
     margin-left: 17px;
     height: 26px;
     font-family: $font;
@@ -37,8 +37,13 @@
     text-transform: uppercase;
 }
 
+.sideBarSearchBtn:hover {
+    background: white;
+    color: $coral;
+}
+
 .queryContainer {
-    margin-right: 20px;
+    margin-right: 30px;
 }
 
 .criteriaContainer {
@@ -48,7 +53,8 @@
     justify-content: center;
 }
 
-.languageContainer {
+.languageContainer,
+.sortByContainer {
     color: #577F90;
     border-radius: 25px;
     font-size: 0.9rem;
