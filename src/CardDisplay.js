@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import NoImageAvailableLarge from "./images/NoImageAvailableLarge.jpg";
 
 // Display for each individual card
 
@@ -18,27 +19,30 @@ class CardDisplay extends Component {
   }
 
   setDisplayArray = () => {
-    console.log(this.props.data);
-    this.setState(
-      {
-        displayArray: this.props.data,
-      },
-      () => console.log(this.state.displayArray)
-    );
+    this.setState({
+      displayArray: this.props.data,
+    });
   };
 
   render() {
     return (
-      <div className="gridContainer">
+      <div className="cardContainer">
         {this.state.displayArray.map((each) => {
           return (
-            <Link to={`/show/${each.id}`}>
-              <div className="cardContainer">
-                <img src={each.image.medium} alt="add this" />
+            <div className="movieContainer">
+              <Link to={`/show/${each.id}`}>
+                <img
+                  src={
+                    each.image === null
+                      ? NoImageAvailableLarge
+                      : each.image.medium
+                  }
+                  alt={each.name}
+                />
                 <h4 className="bodyCardRating">{each.rating.average}</h4>
                 <h3 className="bodyCardTitle">{each.name}</h3>
-              </div>
-            </Link>
+              </Link>
+            </div>
           );
         })}
       </div>

@@ -2,6 +2,16 @@ body {
   background: $green;
   color: white;
   font-size: 62.5%;
+  font-family: $font;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 .mainTitle {
   font-family: $font;
@@ -11,15 +21,22 @@ body {
   font-size: 3rem;
   margin: 0;
 }
+
 .createListBtn {
   background: $coral;
-  border: 2px solid $coral;
-  border-radius: 15%;
+  border: none;
+  color: $blue;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+  margin-right: 17px;
+  height: 26px;
   font-family: $font;
   font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 1.3px;
-  padding: 0;
+  text-transform: uppercase;
+  width: 10%;
+  height: 40px;
 }
 header {
   background: $blue;
@@ -51,5 +68,3 @@ header {
 .firebase-data {
   background: purple;
 }
-
-// TvShow Card

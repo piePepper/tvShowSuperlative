@@ -14,6 +14,12 @@ class SideBar extends Component {
         ["", "status"],
         ["", "network", "name"],
       ],
+      sortArray: [
+        ["A-Z", "name", "1"],
+        ["Z-A", "name", "-1"],
+        ["Highest Rated", "rating", "1"],
+        ["Lowest Rated", "rating", "-1"],
+      ],
     };
   }
 
@@ -24,29 +30,29 @@ class SideBar extends Component {
       let [key, subKey] = each;
       if (subKey === undefined) {
         response.forEach((single) => {
-          if (single[`${key}`] === null || single[`${key}`] === undefined) {
-          } else if (single[`${key}`].constructor === Array) {
-            single[`${key}`].forEach((nestedValue) => {
+          if (single[key] === null || single[key] === undefined) {
+          } else if (single[key].constructor === Array) {
+            single[key].forEach((nestedValue) => {
               if (!tempArray.includes(nestedValue)) tempArray.push(nestedValue);
             });
-          } else if (!tempArray.includes(single[`${key}`])) {
-            tempArray.push(single[`${key}`]);
+          } else if (!tempArray.includes(single[key])) {
+            tempArray.push(single[key]);
           }
         });
       } else {
         response.forEach((single) => {
           if (
-            single[`${key}`] === null ||
-            single[`${key}`] === undefined ||
-            single[`${key}`][`${subKey}`] === null ||
-            single[`${key}`][`${subKey}`] === undefined
+            single[key] === null ||
+            single[key] === undefined ||
+            single[key][subKey] === null ||
+            single[key][subKey] === undefined
           ) {
-          } else if (single[`${key}`][`${subKey}`].constructor === Array) {
-            single[`${key}`][`${subKey}`].forEach((nestedValue) => {
+          } else if (single[key][subKey].constructor === Array) {
+            single[key][subKey].forEach((nestedValue) => {
               if (!tempArray.includes(nestedValue)) tempArray.push(nestedValue);
             });
-          } else if (!tempArray.includes(single[`${key}`][`${subKey}`])) {
-            tempArray.push(single[`${key}`][`${subKey}`]);
+          } else if (!tempArray.includes(single[key][subKey])) {
+            tempArray.push(single[key][subKey]);
           }
         });
       }
@@ -66,8 +72,8 @@ class SideBar extends Component {
   dropHandler = (event) => {
     let tempArray = this.state.returnFilter;
     event.target.value === ""
-      ? (tempArray[`${event.target.id}`][0] = "")
-      : (tempArray[`${event.target.id}`][0] = event.target.value);
+      ? (tempArray[event.target.id][0] = "")
+      : (tempArray[event.target.id][0] = event.target.value);
     this.setState(
       {
         returnFilter: tempArray,
@@ -82,6 +88,10 @@ class SideBar extends Component {
     });
   };
 
+  sortHandler = (event) => {
+    this.props.sortPass(event.target.value.split(","));
+  };
+
   sideBarData = (event) => {
     event.preventDefault();
     this.props.searchPass(this.state.searchBar);
@@ -89,13 +99,12 @@ class SideBar extends Component {
 
   render() {
     return (
-      <div className>
+      <div>
         <form>
           <input
             type="text"
             placeholder="Search"
             onChange={this.searchHandler}
-            className="searchBox"
           />
           <button className="sideBarSearchBtn" onClick={this.sideBarData}>
             Search
@@ -105,20 +114,23 @@ class SideBar extends Component {
           {this.state.filters.map((row, index) => {
             return (
               <>
-                <label>{`${row[1]}`}</label>
-                <select
-                  id={`${index}`}
-                  name={`${row[1]}`}
-                  onChange={this.dropHandler}
-                >
+                <label>{row[1]}</label>
+                <select id={index} name={row[1]} onChange={this.dropHandler}>
                   <option value=""></option>
                   {this.state.filters[index][0].map((each) => {
-                    return <option value={`${each}`}>{`${each}`}</option>;
+                    return <option value={each}>{each}</option>;
                   })}
                 </select>
               </>
             );
           })}
+          <label>Sort By</label>
+          <select id="sortBy" name="sortBy" onChange={this.sortHandler}>
+            <option value=""></option>
+            {this.state.sortArray.map((each) => {
+              return <option value={[each[1], each[2]]}>{each[0]}</option>;
+            })}
+          </select>
         </form>
       </div>
     );
@@ -126,15 +138,3 @@ class SideBar extends Component {
 }
 
 export default SideBar;
-
-//! I may need this for setting the sorting dropdown
-// sortThis = () => {
-//     let sortArray = this.state.apiData;
-//     sortArray.sort((a, b) => {
-//         return b.rating.average - a.rating.average
-//     });
-//     this.setState({
-//         sortedData: sortArray,
-//     })
-// }
-//!
