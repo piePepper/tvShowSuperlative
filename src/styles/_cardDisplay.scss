@@ -1,0 +1,15 @@
+//Card Display
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardContainer img {
+    max-width: 100%
+}
+
+.movieContainer {
+    width: 20%;
+    background: white;
+    padding: 15px;
+}

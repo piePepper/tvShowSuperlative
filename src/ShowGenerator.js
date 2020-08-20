@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import CardDisplay from "./CardDisplay";
 import Sidebar from "./Sidebar";
 import axios from "axios";
-import "./App.css";
+import "./styles/styles.scss";
+import ListSelection from './ListSelection';
 
 //todo Need to bring dropdown info from sidebar and sort displayArray prior to render.
 
@@ -117,9 +118,14 @@ class ShowGenerator extends Component {
 
     render() {
         return (
-            <div className="App">
-                <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} sortPass={this.sortFunc}/>
-                <CardDisplay data={this.state.displayArray} />
+            <div className="showGeneratorContainer">
+                <div className="sideBarContainer">
+                  <Sidebar chosenFilters={this.state.chosenFilters} apiData={this.state.apiData} bringItOnBack={this.setFilterArray} searchPass={this.setSearch} sortPass={this.sortFunc}/>
+                  <ListSelection />
+                </div>
+                <div className="cardDisplayContainer">
+                  <CardDisplay data={this.state.displayArray} />
+                </div>
             </div>
         );
     }

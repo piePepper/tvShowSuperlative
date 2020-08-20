@@ -24,25 +24,25 @@ class CardDisplay extends Component {
 		})
 	}
 
-	render() {
-		return (
-			<div>
-				{
-					this.state.displayArray.map((each) => {
-						return (
-							<Link to={`/show/${each.id}`}>
-								<div className='cardContainer'>
-									<img src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
-									<h3 className='bodyCardTitle'>{each.name}</h3>
-									<h4 className='bodyCardRating'>{each.rating.average}</h4>
-								</div>
-							</Link>
-						)
-					})
-				}
-			</div>
-		);
-	}
+  render() {
+      return (
+        <div className="cardContainer">
+          {
+            this.state.displayArray.map((each) => {
+              return(
+                <div className="movieContainer">
+                      <Link to={`/show/${each.id}`}>
+                          <img src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
+                          <h4 className='bodyCardRating'>{each.rating.average}</h4>
+                          <h3 className='bodyCardTitle'>{each.name}</h3>
+                      </Link> 
+                </div>
+              )
+            })
+          }
+        </div>
+      );
+    }
 }
 
 export default CardDisplay;

@@ -91,6 +91,7 @@ class SideBar extends Component {
 		this.props.sortPass(event.target.value.split(','))
 	}
 
+
 	sideBarData = (event) => {
 		event.preventDefault();
 		this.props.searchPass(this.state.searchBar);
