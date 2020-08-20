@@ -14,7 +14,6 @@ class App extends Component {
     const dbRef = firebase.database().ref();
     const userObj = {
       listName: listName,
-
       shows: []
     }
     dbRef.push(userObj)

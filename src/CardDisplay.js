@@ -28,6 +28,8 @@ class CardDisplay extends Component {
 		return (
 			<>
 			{
+			this.state.displayArray.length !== 0
+			?
 			this.state.displayArray.map((each) => {
 				return (
 					<div className="movieContainer">
@@ -39,11 +41,12 @@ class CardDisplay extends Component {
 					</div>
 				)
 			})
+			:
+				<h2>No results to show for combination of search and/or filters.</h2>
 			}
 			</>
 		);
 	}
-
 }
 
 export default CardDisplay;
