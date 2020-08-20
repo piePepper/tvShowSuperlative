@@ -14,7 +14,6 @@ class UserList extends Component {
             arrayWithShowIDs: [],
         };
     }
-    //Okay, just a tip, once you get your array of tv id's, use a foreach to loop over the array and replace 599 in this endpoint with each show id and push to a temp array:
 
     componentDidMount() {
         const dbRef = firebase.database().ref(this.props.match.params.listid)
@@ -33,7 +32,6 @@ class UserList extends Component {
 
     createUserListDisplay = () => {
         let promiseArray = [];
-        console.log(this.state.arrayWithShowIDs);
         this.state.arrayWithShowIDs.forEach((each) => {
             promiseArray.push(axios({url: `https://api.tvmaze.com/shows/${each}`}))
         })
