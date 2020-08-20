@@ -33,6 +33,23 @@
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    width: 300px;
-    justify-content: center;
+    align-items: center;
+  }
+
+  .addToListBtn {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background: $coral;
+    border: 2px solid black;
+    color: $blue;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 0.6rem;
+    margin-bottom: 15px;
+    height: 26px;
+    font-family: $font;
+    font-weight: 700;
+    text-transform: uppercase;
+    height: 40px;
   }

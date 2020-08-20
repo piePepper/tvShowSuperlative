@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import firebase from './firebase';
-
+import React, { Component } from "react";
+import firebase from "./firebase";
 
 // this component adds the show ID to a specific user list
 
@@ -55,4 +54,3 @@ class AddToList extends Component {
 }
 
 export default AddToList;
-

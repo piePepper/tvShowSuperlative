@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import NoImageAvailableLarge from './images/NoImageAvailableLarge.jpg'
 import firebase from "./firebase";
 import axios from 'axios'
@@ -43,35 +44,51 @@ class UserList extends Component {
             arrayWithShowIDs: sortedArrayWithID
         })
     }
+    const sortedArray = unsortedArray.sort(function (a, b) {
+      return b.counter - a.counter;
+    });
+    const sortedArrayWithID = sortedArray.map((x) => x.showID);
+    this.setState({
+      arrayWithShowIDs: sortedArrayWithID,
+    });
+  };
 
-    counterFunc = (event) => {
-        const dbRef = firebase.database().ref(this.props.match.params.listid).child("shows")
-        const showID = event.target.getAttribute("showid")
-        const myNum = parseInt(event.target.value)
-        const origNum = this.state.displayListInfo.shows[showID].counter
-        dbRef.child(showID).update({ counter: (origNum + myNum) })
-        this.sortArray()
-    }
+  counterFunc = (event) => {
+    const dbRef = firebase
+      .database()
+      .ref(this.props.match.params.listid)
+      .child("shows");
+    const showID = event.target.getAttribute("showid");
+    const myNum = parseInt(event.target.value);
+    const origNum = this.state.displayListInfo.shows[showID].counter;
+    dbRef.child(showID).update({ counter: origNum + myNum });
+    this.sortArray();
+  };
 
-    //Loops through the users array of shows to get a set of tv show data.
-    //We only want the shows to display when all are ready, so we store
-    //the returned promises in promiseArray and use PromiseAll to fire
-    //when they are all successful.
+  //Loops through the users array of shows to get a set of tv show data.
+  //We only want the shows to display when all are ready, so we store
+  //the returned promises in promiseArray and use PromiseAll to fire
+  //when they are all successful.
 
-    createUserListDisplay = () => {
-        let promiseArray = [];
-        this.state.arrayWithShowIDs.forEach((each) => {
-            promiseArray.push(axios({ url: `https://api.tvmaze.com/shows/${each}` }))
-        })
-        Promise.all(promiseArray).then((item) => {
-            let storeArray = item.map((each) => { return each.data });
-            this.setState({
-                displayArray: storeArray,
-            })
-        });
-    }
-    render() {
-        return (
+  createUserListDisplay = () => {
+    let promiseArray = [];
+    this.state.arrayWithShowIDs.forEach((each) => {
+      promiseArray.push(axios({ url: `https://api.tvmaze.com/shows/${each}` }));
+    });
+    Promise.all(promiseArray).then((item) => {
+      let storeArray = item.map((each) => {
+        return each.data;
+      });
+      this.setState({
+        displayArray: storeArray,
+      });
+    });
+  };
+  render() {
+    return (
+      <>
+        {this.state.displayArray.map((each) => {
+          return (
             <>
                 {
                     this.state.displayArray.map((each) => {
@@ -87,7 +104,10 @@ class UserList extends Component {
                     })
                 }
             </>
-        )
-    }
+          );
+        })}
+      </>
+    );
+  }
 }
-export default UserList
+export default UserList;
