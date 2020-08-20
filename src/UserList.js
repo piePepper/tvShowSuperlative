@@ -12,7 +12,6 @@ class UserList extends Component {
             displayArray: [],
             arrayWithShowIDs: [],
             sortedArray: [],
-
         };
     }
     componentDidMount() {
