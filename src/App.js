@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+// import "./App.css";
 import TvShowCard from "./TvShowCard";
 import SideBar from "./Sidebar";
 import BodyDisplay from "./CardDisplay";
@@ -33,11 +33,14 @@ class App extends Component {
         <div className="App">
           <header>
             <h1 className="mainTitle"> PiePepper</h1>
-            <button onClick={this.getListNameThenAddToDatabase}>
+            <button
+              onClick={this.getListNameThenAddToDatabase}
+              className="createListBtn"
+            >
               Create List
             </button>
           </header>
-          <ListSelection />
+          {/* <ListSelection /> */}
           <Route exact path="/" component={ShowGenerator} />
           <Route path="/show/:id" component={TvShowCard} />
           <Route path="/list/:listid" component={UserList} />

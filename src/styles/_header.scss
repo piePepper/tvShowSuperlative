@@ -1,35 +1,55 @@
 body {
-    background: $green;
-    color: white;
-    font-size: 62.5%
+  background: $green;
+  color: white;
+  font-size: 62.5%;
 }
-
 .mainTitle {
-    font-family: $font;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 3rem;
-    margin: 0;
+  font-family: $font;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 3rem;
+  margin: 0;
 }
-
-header button {
-    background: $coral;
-    border: 2px solid $coral;
-    border-radius: 15%;
-    font-family: $font;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 1.3px;
-    padding: 0;
+.createListBtn {
+  background: $coral;
+  border: 2px solid $coral;
+  border-radius: 15%;
+  font-family: $font;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1.3px;
+  padding: 0;
 }
-
 header {
-    background: $blue;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px;
-    padding-bottom:5px;
-
+  background: $blue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  padding-bottom: 5px;
 }
+// CARD DISPLAY
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cardContainer img {
+  max-width: 100%;
+}
+.movieContainer {
+  width: 60%;
+}
+//SIDE BAR
+.showGeneratorContainer {
+  display: flex;
+  //   width: 80%;
+}
+.sideBarContainer {
+  background: pink;
+}
+.firebase-data {
+  background: purple;
+}
+
+// TvShow Card

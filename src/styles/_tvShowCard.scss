@@ -1,0 +1,28 @@
+.tvShowCard {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-around;
+  padding: 10%;
+}
+.showCardContent {
+  text-align: center;
+  padding: 5%;
+  border: 5px solid black;
+  margin: 5px;
+  border-radius: 8px;
+}
+
+h1 {
+  padding-bottom: 20px;
+  font-size: 1.25rem;
+}
+
+li {
+  padding-bottom: 15px;
+  font-size: 1rem;
+}
+
+.tvShowCard img {
+  width: 100%;
+}

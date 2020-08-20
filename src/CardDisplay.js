@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 class CardDisplay extends Component {
   constructor(props) {
     super(props);
-      this.state = {
-        displayArray: []
-      }
+    this.state = {
+      displayArray: [],
+    };
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -18,31 +18,32 @@ class CardDisplay extends Component {
   }
 
   setDisplayArray = () => {
-    console.log(this.props.data)
-    this.setState({
-      displayArray: this.props.data,
-    },() => console.log(this.state.displayArray))
-  }
+    console.log(this.props.data);
+    this.setState(
+      {
+        displayArray: this.props.data,
+      },
+      () => console.log(this.state.displayArray)
+    );
+  };
 
   render() {
-      return (
-        <div>
-          {
-            this.state.displayArray.map((each) => {
-              return(
-              <Link to={`/show/${each.id}`}>
-                <div className='cardContainer'>
-                  <img src={each.image.medium} alt="add this"/>
-                  <h4 className='bodyCardRating'>{each.rating.average}</h4>
-                  <h3 className='bodyCardTitle'>{each.name}</h3>
-                </div>
-              </Link> 
-              )
-            })
-          }
-        </div>
-      );
-    }
+    return (
+      <div className="gridContainer">
+        {this.state.displayArray.map((each) => {
+          return (
+            <Link to={`/show/${each.id}`}>
+              <div className="cardContainer">
+                <img src={each.image.medium} alt="add this" />
+                <h4 className="bodyCardRating">{each.rating.average}</h4>
+                <h3 className="bodyCardTitle">{each.name}</h3>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
 }
 
 export default CardDisplay;

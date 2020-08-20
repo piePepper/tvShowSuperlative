@@ -12,8 +12,8 @@ class TvShowCard extends Component {
       url: "https://api.tvmaze.com/shows/" + this.props.match.params.id,
     }).then((response) => {
       console.log(response.data);
-      this.setState({ 
-        apiData: response.data 
+      this.setState({
+        apiData: response.data,
       });
     });
   }
@@ -24,14 +24,16 @@ class TvShowCard extends Component {
     }
     return (
       <div className="tvShowCard">
-        <h1 className="showTitle">{data.name}</h1>
+        <div className="showCardContent">
+          <h1 className="showTitle">{data.name}</h1>
+          <ul>
+            <li>{data.network && data.network.name}</li>
+            <li>{data.country}</li>
+            <li>{data.genres}</li>
+            <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
+          </ul>
+        </div>
         <img src={data.image && data.image.medium} alt={data.name} />
-        <ul>
-          <li>{data.network && data.network.name}</li>
-          <li>{data.country}</li>
-          <li>{data.genres}</li>
-          <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
-        </ul>
       </div>
     );
   }
