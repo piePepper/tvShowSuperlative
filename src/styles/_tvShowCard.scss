@@ -4,11 +4,12 @@
   margin: 0 auto;
   justify-content: space-around;
   padding: 10%;
+  padding-bottom: 10px;
 }
 .showCardContent {
   text-align: center;
   padding: 5%;
-  border: 5px solid black;
+  border: 5px solid white;
   margin: 5px;
   border-radius: 8px;
 }
@@ -25,4 +26,12 @@ li {
 
 .tvShowCard img {
   width: 100%;
+}
+
+.listBtns {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 300px;
+  justify-content: center;
 }

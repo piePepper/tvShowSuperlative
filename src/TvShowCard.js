@@ -22,25 +22,25 @@ class TvShowCard extends Component {
   render() {
     const data = this.state.apiData;
     return (
-      <div className="tvShowCard">
-        <div className="showCardContent">
-          <h1 className="showTitle">{data.name}</h1>
-          <ul>
-            <li>{data.network && data.network.name}</li>
-            <li>{data.country}</li>
-            <li>{data.genres}</li>
-            <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
-          </ul>
+      <>
+        <div className="tvShowCard">
+          <div className="showCardContent">
+            <h1 className="showTitle">{data.name}</h1>
+            <ul>
+              <li>{data.network && data.network.name}</li>
+              <li>{data.country}</li>
+              <li>{data.genres}</li>
+              <li>
+                {data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}
+              </li>
+            </ul>
+          </div>
+          <img src={data.image && data.image.medium} alt={data.name} />
         </div>
-        <img src={data.image && data.image.medium} alt={data.name} />
-        <ul>
-          <li>{data.network && data.network.name}</li>
-          <li>{data.country}</li>
-          <li>{data.genres}</li>
-          <li>{data.summary && data.summary.replace(/(<([^>]+)>)/gi, "")}</li>
+        <div className="listBtns">
           <AddToList id={this.props.match.params.id} />
-        </ul>
-      </div>
+        </div>
+      </>
     );
   }
 }
