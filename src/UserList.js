@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import NoImageAvailableLarge from './images/NoImageAvailableLarge.jpg'
 import firebase from "./firebase";
 import axios from 'axios'
-// import Counter from "./Counter"
 class UserList extends Component {
     constructor() {
         super();
@@ -14,6 +12,7 @@ class UserList extends Component {
             sortedArray: [],
         };
     }
+    
     componentDidMount() {
         const dbRef = firebase.database().ref(this.props.match.params.listid)
         dbRef.on('value', (snapshot) => {
@@ -78,7 +77,6 @@ class UserList extends Component {
                     this.state.displayArray.map((each) => {
                         return (
                             <>
-                                {/* {console.log(this.state.displayArray, "CC this is the display array that's mapped")} */}
                                 <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
                                 <h4 className='bodyCardRating'>{each.rating.average}</h4>
                                 <h3 className='bodyCardTitle'>{each.name}</h3>
