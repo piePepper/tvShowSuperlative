@@ -83,11 +83,14 @@ class UserList extends Component {
                 this.state.displayArray.map((each) => {
                     return (
                         <>
+                          <div className="userListContainer">
                             <img className="userListImage" src={each.image === null ? NoImageAvailableLarge : each.image.medium} alt={each.name} />
-                            <h4 className='bodyCardRating'>{each.rating.average}</h4>
-                            <h3 className='bodyCardTitle'>{each.name}</h3>
-                            <button onClick={this.counterFunc} showid={each.id} value={1}> UpVote </button>
-                            <button onClick={this.counterFunc} showid={each.id} value={-1}> DownVote </button>
+                            <h4 className='userCardRating'>{each.rating.average}</h4>
+                            <h3 className='userCardTitle'>{each.name}</h3>
+                            <button onClick={this.counterFunc} showid={each.id} value={1} className="upVoteBtn"> UpVote </button>
+                            <button onClick={this.counterFunc} showid={each.id} value={-1} className="downVoteBtn"> DownVote </button>
+
+                          </div>
                         </>
                     )
                 })
