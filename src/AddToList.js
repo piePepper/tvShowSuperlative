@@ -42,7 +42,8 @@ class AddToList extends Component {
                     {this.state.dbReturn.map((entry) => {
                         return (
                             <button key={entry.key} path={entry.key} showid={(parseInt(this.props.id))}
-                                onClick={this.setNewShow}>
+                                onClick={this.setNewShow}
+                                className="addToListBtn">
                                 Add to {entry.name.listName}
                             </button>
                         )

@@ -42,6 +42,7 @@ class ListSelection extends Component {
                 <Link to={`/list/${entry.key}`}>
                   <p>{entry.name.listName}</p>
                   <button
+                    className="listDelete"
                     onClick={() => {
                       this.removeList(entry.key);
                     }}
