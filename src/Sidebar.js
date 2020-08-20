@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-//todo need to add the sorting dropdown
-
 class SideBar extends Component {
 	constructor() {
 		super();
@@ -105,27 +103,27 @@ class SideBar extends Component {
 					<button className="sideBarSearchBtn" onClick={this.sideBarData}>Search</button>
 				</form>
 				<form>
-					{
-					this.state.filters.map((row, index) => {
-						return (
-							<>
-							<label>
-								{row[1]}
-							</label>
-							<select id={index} name={row[1]} onChange={this.dropHandler}>
-								<option value=''></option>
-								{
-									this.state.filters[index][0].map((each) => {
-										return (
-											<option value={each}>{each}</option>
-										)
-									})
-								}
-							</select>
-							</>
-						)
-					})
-					}
+				{
+				this.state.filters.map((row, index) => {
+					return (
+						<>
+						<label>
+							{row[1]}
+						</label>
+						<select id={index} name={row[1]} onChange={this.dropHandler}>
+							<option value=''></option>
+							{
+								this.state.filters[index][0].map((each) => {
+									return (
+										<option value={each}>{each}</option>
+									)
+								})
+							}
+						</select>
+						</>
+					)
+				})
+				}
 				<label>
 					Sort By
 				</label>
