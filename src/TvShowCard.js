@@ -6,13 +6,14 @@ import AddToList from "./AddToList"
 class TvShowCard extends Component {
   constructor() {
     super();
-    this.state = { apiData: [] };
+    this.state = { 
+      apiData: [], 
+    };
   }
   componentDidMount() {
     axios({
       url: "https://api.tvmaze.com/shows/" + this.props.match.params.id,
     }).then((response) => {
-      console.log(response.data);
       this.setState({ 
         apiData: response.data 
       });
@@ -20,9 +21,6 @@ class TvShowCard extends Component {
   }
   render() {
     const data = this.state.apiData;
-    if (!data) {
-      return <div>loading</div>;
-    }
     return (
       <div className="tvShowCard">
         <h1 className="showTitle">{data.name}</h1>
