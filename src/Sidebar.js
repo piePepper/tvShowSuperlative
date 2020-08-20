@@ -88,17 +88,18 @@ class SideBar extends Component {
 
   render() {
     return (
-      <div>
+      <div className="queryContainer">
         <form>
-          <input type="text" placeholder="Search" onChange={this.searchHandler} />
+          <input type="text" placeholder="Search" 
+          onChange={this.searchHandler}className="searchBox" />
           <button className="sideBarSearchBtn" onClick={this.sideBarData}>Search</button>
         </form>
-        <form>
+        <form className="criteriaContainer">
           {
             this.state.filters.map((row, index) => {
               return (
                 <>
-                  <label>
+                  <label className="languageContainer">
                     {`${row[1]}`}
                   </label>
                   <select id={`${index}`} name={`${row[1]}`} onChange={this.dropHandler}>

@@ -26,17 +26,17 @@ class CardDisplay extends Component {
 
   render() {
       return (
-        <div>
+        <div className="cardContainer">
           {
             this.state.displayArray.map((each) => {
               return(
+          <div className="movieContainer">
               <Link to={`/show/${each.id}`}>
-                <div className='cardContainer'>
                   <img src={each.image.medium} alt="add this"/>
                   <h4 className='bodyCardRating'>{each.rating.average}</h4>
                   <h3 className='bodyCardTitle'>{each.name}</h3>
-                </div>
               </Link> 
+        </div>
               )
             })
           }
