@@ -36,11 +36,11 @@ class TvShowCard extends Component {
         
         <img src={data.image && data.image.medium} alt={data.name} className="tvShowCardImg"/>
         
+      </div>
+      
         <div className="listBtns">
           <AddToList id={this.props.match.params.id}/>
         </div>
-
-      </div>
       </>
     );
   }
